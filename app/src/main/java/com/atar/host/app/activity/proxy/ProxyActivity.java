@@ -46,10 +46,8 @@ public class ProxyActivity extends CommonActivity {
     protected void onStart() {
         super.onStart();
         if (mProxyManager != null) {
-            ZzLog.e("mProxyManager.onStart()");
             mProxyManager.onStart();
         }
-        ZzLog.e("onStart(()");
     }
 
     @Override

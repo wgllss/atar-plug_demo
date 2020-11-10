@@ -49,21 +49,29 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
         super.initControl(savedInstanceState);
         addContentLayout(R.layout.activity_web_view);
         webview = findViewById(R.id.common_refresh_bridgewebview);
+        setRefreshUI(findViewById(R.id.refreshLayout));
+    }
+
+    @Override
+    protected void bindEvent() {
+        super.bindEvent();
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadMoreListener(this);
+        setEnableRefresh(true);
+        setEnableLoadMore(true);
+        autoRefresh();
     }
 
     @Override
     protected void initValue() {
         super.initValue();
         setActivityTitle("宿主html页");
-
         url = getIntent().getStringExtra(URL_KEY);
         /* 向html传入初始参数 start */
         String mode = getIntent().getStringExtra(PULL_TO_REFRESH_MODE_KEY);
         String options = getIntent().getStringExtra(OPTIONS_KEY);
         webview.addJavascriptInterface(mImplInAndroidScript, "injs");
         optionsJson = DynamicHtmlUtils.getInitValue(this, this, webview, options, mode, url);
-        setEnableRefresh(false);
-        setEnableLoadMore(false);
     }
 
     @Override
@@ -74,6 +82,7 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
 //                showloading();
                 break;
             case EnumMsgWhat.msgWhat_handler_1:// 加载html初始化完成
+                finishBoth();
                 long lasttime = System.currentTimeMillis();
                 ShowLog.e(TAG, "加载完成，耗时:" + (lasttime - time) + "ms");
 

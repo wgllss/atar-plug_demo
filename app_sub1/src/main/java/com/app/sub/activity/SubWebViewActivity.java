@@ -62,8 +62,6 @@ public class SubWebViewActivity extends CommTitleResouseActivity {
         @Nullable
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            ZzLog.e(TAG, "shouldInterceptRequest thread id: " + Thread.currentThread().getId() +
-                    "---url-->" + System.currentTimeMillis());
             int lastSlash = url.lastIndexOf("/");
             if (lastSlash != -1) {
                 String suffix = url.substring(lastSlash + 1);

@@ -95,7 +95,9 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
         findViewById(R.id.txt_web).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.startWebViewActivity(Main2Activity.this, "http://192.168.96.97:8080/assets/html/topic5.html", apk_sdk_path);
+//                String url = "file:///android_asset/html/topic5.html";
+                String url = "http://192.168.96.97:8080/assets/html/topic5.html";
+                WebViewActivity.startWebViewActivity(Main2Activity.this, url, apk_sdk_path);
             }
         });
 
