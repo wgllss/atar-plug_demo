@@ -1,0 +1,51 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        //阿里云的镜像库
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        google()
+        mavenCentral()  //注意下这个顺序，jcenter()放到最下面
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        //阿里云的镜像库
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        google()
+        mavenCentral()  //注意下这个顺序，jcenter()放到最下面
+        jcenter()
+
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 28
+    buildToolsVersion = "28.0.2"
+    minSdkVersion = 19
+    targetSdkVersion = 28
+    supportVersion = "28.1.0"
+
+    libSupportAppcompat_v7 = 'androidx.appcompat:appcompat:1.1.0'
+    libSupportRecyclerView = 'androidx.recyclerview:recyclerview:1.1.0'
+//    libSupportdesign = 'com.google.android.material:material:1.1.0'
+}

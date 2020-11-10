@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+//common_resource 下放置某公司下通用公用资源，和 common_business_code分开为了 方便 app可以统一处理换皮肤包
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1000
+        versionName "1.0.00"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    compile libSupportAppcompat_v7
+    compile libSupportRecyclerView
+//    compile libSupportdesign
+//    implementation 'com.android.support:appcompat-v7:30.+'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_height="350dp">
+
+    <EditText
+        android:id="@+id/edt_content"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:background="@color/background"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/txt_ok"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/blue_select_txt"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/txt_close"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@color/stock_up_color"
+        android:textSize="16dp"
+        android:text="关闭" />
+</LinearLayout>

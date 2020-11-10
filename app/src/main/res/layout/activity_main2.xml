@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="主界面"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18dp" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/txt_click_net99"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@color/stock_up_color"-->
+        <!--android:gravity="center"-->
+        <!--android:text="点击获取数据"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="16dp" />-->
+
+    <TextView
+        android:id="@+id/txt_to_plugin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="到插件内"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/txt_web"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="html"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/txt_download"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="下载插件"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+</LinearLayout>
