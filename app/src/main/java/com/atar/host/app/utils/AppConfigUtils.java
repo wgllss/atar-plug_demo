@@ -8,7 +8,9 @@ import android.content.res.AssetManager;
 import com.common.framework.Threadpool.ThreadPoolTool;
 import com.common.framework.application.AppConfigModel;
 import com.common.framework.utils.ShowLog;
+import com.common.framework.utils.ZzLog;
 
+import static com.atar.host.app.activity.web.OffineImplWebViewClient.HOST_OFFINE_FILE_PATH_KEY;
 import static com.atar.host.app.activity.web.OffineImplWebViewClient.OFFINE_FILE_PATH_KEY;
 
 /**
@@ -87,8 +89,9 @@ public class AppConfigUtils {
                             strOfflineResources += html[i];
                         }
                     }
-                    AppConfigModel.getInstance().putString(OFFINE_FILE_PATH_KEY,
+                    AppConfigModel.getInstance().putString(HOST_OFFINE_FILE_PATH_KEY,
                             strOfflineResources, true);
+                    ZzLog.e("加载完成：");
                 } catch (Exception e) {
                     ShowLog.e(TAG, e);
                 }

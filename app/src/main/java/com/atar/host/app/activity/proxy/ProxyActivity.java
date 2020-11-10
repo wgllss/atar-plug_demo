@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.atar.host.app.contans.Config;
 import com.atar.host.app.plugin.ProxyManager;
+import com.common.business.code.activity.BaseActivity;
 import com.common.business.code.utils.IntentUtil;
 import com.common.framework.activity.CommonActivity;
 import com.common.framework.application.CrashHandler;
@@ -147,12 +148,14 @@ public class ProxyActivity extends CommonActivity {
         }
     }
 
-    public static void startProxyActivity(final Context context, final String className, String apk_sdk_path) {
+    public static void startProxyActivity(final BaseActivity context, final String className, String apk_sdk_path) {
         if (isLoadApk) {
+            context.showloading();
             PluginManager.getInstance().setContext(context);
             PluginManager.getInstance().loadApk(apk_sdk_path, new PluginListener() {
                 @Override
                 public void success(Resources pluginResources, PackageInfo pluginPackageArchiveInfo) {
+                    context.hideLoading();
                     if (PluginManager.getInstance().exists(className)) {
                         Intent intent = new Intent(context, ProxyActivity.class);
                         intent.putExtra(PluginManager.CLASS_NAME, className);

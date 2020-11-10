@@ -20,6 +20,7 @@ import com.common.framework.application.CrashHandler;
 import com.common.framework.interfaces.HandlerListener;
 import com.common.framework.plugin.PluginListener;
 import com.common.framework.plugin.PluginManager;
+import com.common.framework.utils.ShowLog;
 import com.common.framework.widget.CommonToast;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,6 +32,8 @@ import androidx.annotation.NonNull;
 
 public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPresenter> implements HandlerListener {
 
+    private String TAG = WebViewActivity.class.getSimpleName();
+
     private BridgeWebView webview;
     private String url;
     private String optionsJson = "";
@@ -38,6 +41,8 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
     //暂存带有html返回结果
     private Map<String, String> tempJson = new HashMap<String, String>();
     private ImplInAndroidScript mImplInAndroidScript = new ImplInAndroidScript(tempJson);
+
+    private long time;
 
     @Override
     public void initControl(Bundle savedInstanceState) {
@@ -65,11 +70,15 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
     public void onHandlerData(Message msg) {
         switch (msg.what) {
             case EnumMsgWhat.msgWhat_handler:// 加载html开始
-                showloading();
+                time = System.currentTimeMillis();
+//                showloading();
                 break;
             case EnumMsgWhat.msgWhat_handler_1:// 加载html初始化完成
+                long lasttime = System.currentTimeMillis();
+                ShowLog.e(TAG, "加载完成，耗时:" + (lasttime - time) + "ms");
+
                 isWebViewLoadSuccess = true;
-                hideLoading();
+//                hideLoading();
                 webview.send(optionsJson);//传入数据到h5
 //                if (mImplOnTouchChanceTextSizeListener != null) {
 //                    mImplOnTouchChanceTextSizeListener.setWebViewLoadSuccess(isWebViewLoadSuccess);
@@ -125,22 +134,20 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
     private static String PULL_TO_REFRESH_MODE_KEY = "PULL_TO_REFRESH_MODE_KEY";//刷新模式
 
     public static void startWebViewActivity(Context context, String url, String apk_sdk_path) {
-        PluginManager.getInstance().setContext(context);
-        PluginManager.getInstance().loadApk(apk_sdk_path, new PluginListener() {
-            @Override
-            public void success(Resources pluginResources, PackageInfo pluginPackageArchiveInfo) {
-                AppConfigUtils.getOffineFilePath(PluginManager.getInstance().getAssets());
-
-                Intent intent = new Intent(context, WebViewActivity.class);
-                intent.putExtra(URL_KEY, url);
-                IntentUtil.startOtherActivity(context, intent);
-            }
-
-            @Override
-            public void fail(Exception e) {
-                CommonToast.show(CrashHandler.crashToString(e));
-            }
-        });
+//        PluginManager.getInstance().setContext(context);
+//        PluginManager.getInstance().loadApk(apk_sdk_path, new PluginListener() {
+//            @Override
+//            public void success(Resources pluginResources, PackageInfo pluginPackageArchiveInfo) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(URL_KEY, url);
+        IntentUtil.startOtherActivity(context, intent);
+//            }
+//
+//            @Override
+//            public void fail(Exception e) {
+//                CommonToast.show(CrashHandler.crashToString(e));
+//            }
+//        });
 
 
     }

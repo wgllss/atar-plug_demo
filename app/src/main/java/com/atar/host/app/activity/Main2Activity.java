@@ -15,11 +15,13 @@ import com.atar.host.app.activity.proxy.ProxyActivity;
 import com.atar.host.app.activity.web.WebViewActivity;
 import com.atar.host.app.contans.Config;
 import com.atar.host.app.presenter.TestPresenter;
+import com.atar.host.app.utils.AppConfigUtils;
 import com.atar.host.app.viewmodels.TestViewModel;
 import com.common.business.code.activity.CommonTitleActivity;
 import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.download.DownLoadFileManager;
 import com.common.framework.interfaces.HandlerListener;
+import com.common.framework.plugin.PluginManager;
 import com.common.framework.utils.ShowLog;
 
 import java.io.File;
@@ -37,7 +39,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
     private TextView txt_download;
 
 
-        private String url = "192.168.96.97:8080/assets/apk/down_plugin/release/app_sub1-release.apk";
+    private String url = "192.168.96.97:8080/assets/apk/down_plugin/release/app_sub1-release.apk";
 //    private String url = "192.168.1.4:8080/assets/apk/down_plugin/release/app_sub1-release.apk";
 //    private String url = "192.168.1.6:8080/assets/apk/down_plugin/app_sub1-debug.apk";
 
@@ -93,7 +95,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
         findViewById(R.id.txt_web).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.startWebViewActivity(Main2Activity.this, "file:android_asset/html/topic5.html", apk_sdk_path);
+                WebViewActivity.startWebViewActivity(Main2Activity.this, "http://192.168.96.97:8080/assets/html/topic5.html", apk_sdk_path);
             }
         });
 
@@ -102,6 +104,8 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
                 .READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_PACKAGES_REQUESTCODE);
 
         DownLoadFileManager.getInstance().initTempFilePercent(1, this, url, strDownloadFileName, Config.strDownloadDir);
+
+        AppConfigUtils.getOffineFilePath(getAssets());
     }
 
     @Override

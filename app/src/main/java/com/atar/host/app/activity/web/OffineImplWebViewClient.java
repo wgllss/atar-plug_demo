@@ -4,6 +4,7 @@
 package com.atar.host.app.activity.web;
 
 import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
@@ -30,6 +31,7 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
      * 保存webview 已有离线文件 key
      */
     public static final String OFFINE_FILE_PATH_KEY = "OFFINE_FILE_PATH_KEY";
+    public static final String HOST_OFFINE_FILE_PATH_KEY = "HOST_OFFINE_FILE_PATH_KEY";
     /**
      * assets离线文件
      */
@@ -38,7 +40,7 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
     public OffineImplWebViewClient(WebViewActivity activity, BridgeWebView webView,
                                    HandlerListener onHandlerDataListener) {
         super(activity, webView, onHandlerDataListener);
-        strOfflineResources = AppConfigModel.getInstance().getString(OFFINE_FILE_PATH_KEY, "");
+        strOfflineResources = AppConfigModel.getInstance().getString(HOST_OFFINE_FILE_PATH_KEY, "");
     }
 
     @SuppressWarnings("deprecation")
@@ -64,17 +66,20 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
                 } else if (suffix.endsWith(".png")) {
                     mimeType = "image/png";
                     offline_res = "img/";// 主要加载预置表情
+                } else if (suffix.endsWith(".html")) {
+                    mimeType = "text/html";
+                    offline_res = "html/";// 主要加载预置表情
                 } else {
                     if (url.contains("img/null")) {
                         return super.shouldInterceptRequest(view, url);
-                    } else {
-                        mimeType = "text/html";
-                        offline_res = "html/";// 主要加载预置表情
                     }
                 }
                 try {
-                    InputStream is = PluginManager.getInstance().getAssets().open(offline_res + suffix);
-                    return new WebResourceResponse(mimeType, "UTF-8", is);
+                    if (!TextUtils.isEmpty(offline_res)) {
+                        ZzLog.e(TAG, offline_res + suffix);
+                        InputStream is = activity.getAssets().open(offline_res + suffix);
+                        return new WebResourceResponse(mimeType, "UTF-8", is);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

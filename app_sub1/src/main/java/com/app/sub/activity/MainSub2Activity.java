@@ -40,6 +40,7 @@ public class MainSub2Activity extends CommTitleResouseActivity implements SubMen
         list.add(new MenuItemBean(3, "子页2 使用 DialogFragment"));
         list.add(new MenuItemBean(4, "子页2 使用 viewPager"));
         list.add(new MenuItemBean(5, "子页2 使用 livedada, 网络请求后用"));
+        list.add(new MenuItemBean(6, "子页2 使用 webview 加载线上"));
         recyclerview.setAdapter(subMenuAdapter);
 
         subMenuAdapter.setListener(this);
@@ -73,6 +74,9 @@ public class MainSub2Activity extends CommTitleResouseActivity implements SubMen
                 break;
             case 5:
                 IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, NetTestActivity.class));
+                break;
+            case 6:
+                IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, SubWebViewActivity.class));
                 break;
         }
     }
