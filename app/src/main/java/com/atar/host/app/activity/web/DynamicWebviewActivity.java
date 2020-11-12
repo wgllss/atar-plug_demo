@@ -81,7 +81,6 @@ public class DynamicWebviewActivity extends RefreshLayoutActivity<TestViewModel,
             case EnumMsgWhat.msgWhat_handler_1:// 加载html初始化完成
                 long lasttime = System.currentTimeMillis();
                 ShowLog.e(TAG, "加载完成，耗时:" + (lasttime - time) + "ms");
-
                 isWebViewLoadSuccess = true;
 //                hideLoading();
                 webview.send(optionsJson);//传入数据到h5
