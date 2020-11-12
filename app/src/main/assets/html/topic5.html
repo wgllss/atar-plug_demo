@@ -847,5 +847,43 @@ vertical-align:30%;
 
 </body>
 <script type="text/javascript">
+    connectWebViewJavascriptBridge(function (bridge) {
+        bridge.init(function (options, responseCallback) { //接收初始值 固定方法
+            // options = JSON.parse(options);
+            //skinType = options.skinType;
+            //isLoadImage = options.isLoadImage;
+
+            <!--alert("1111");-->
+
+            //主动调用下拉刷新
+            window.WebViewJavascriptBridge.callHandler("native_setRefreshing", null);
+
+            //设置成不滑动返回
+            //window.WebViewJavascriptBridge.callHandler('native_setOnDrawerBackEnabled', "0", null);
+
+            //设置不缩放字体
+            // window.WebViewJavascriptBridge.callHandler('native_setZoomTextSize', '0', null);
+        });
+
+        bridge.registerHandler("native_onPullDown", function (data, responseCallback) {//下拉刷新 固定方法
+            window.WebViewJavascriptBridge.callHandler("native_onStopRefresh", null);
+        });
+
+        bridge.registerHandler("native_onPullUp", function (data, responseCallback) {  //上拉加载更多 固定方法
+            window.WebViewJavascriptBridge.callHandler("native_onStopRefresh", null);
+        });
+
+        <!--bridge.registerHandler("native_onClickTopRight", function (data, responseCallback) {  //点击原生导航栏顶部右边 文字或者图片-->
+            <!--window.WebViewJavascriptBridge.callHandler("native_toast", "点击了顶部右边", null);-->
+        <!--});-->
+
+        <!--bridge.registerHandler("native_changeSkin", function (skinType, responseCallback) {  //改变皮肤 固定方法-->
+            <!--if ('1' == skinType) {//夜间模式-->
+
+            <!--} else {-->
+
+            <!--}-->
+        <!--});-->
+    })
 </script>
 </html>

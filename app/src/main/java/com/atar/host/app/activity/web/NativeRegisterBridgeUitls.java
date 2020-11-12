@@ -21,7 +21,7 @@ public class NativeRegisterBridgeUitls {
 
     private static String TAG = NativeRegisterBridgeUitls.class.getSimpleName();
 
-    public static void initRegisterHandler(final WebViewActivity activity, final BridgeWebView webView) {
+    public static void initRegisterHandler(final DynamicWebviewActivity activity, final BridgeWebView webView) {
         if (activity == null || webView == null) {
             return;
         }

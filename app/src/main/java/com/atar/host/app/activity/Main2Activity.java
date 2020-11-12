@@ -12,17 +12,15 @@ import android.widget.TextView;
 
 import com.atar.host.app.R;
 import com.atar.host.app.activity.proxy.ProxyActivity;
-import com.atar.host.app.activity.web.WebViewActivity;
+import com.atar.host.app.activity.web.DynamicWebviewActivity;
 import com.atar.host.app.contans.Config;
 import com.atar.host.app.presenter.TestPresenter;
 import com.atar.host.app.utils.AppConfigUtils;
 import com.atar.host.app.viewmodels.TestViewModel;
-import com.common.business.code.activity.CommonTitleActivity;
 import com.common.business.code.utils.IntentUtil;
 import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.download.DownLoadFileManager;
 import com.common.framework.interfaces.HandlerListener;
-import com.common.framework.plugin.PluginManager;
 import com.common.framework.utils.ShowLog;
 
 import java.io.File;
@@ -91,7 +89,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
             public void onClick(View v) {
 //                String url = "file:///android_asset/html/topic5.html";
                 String url = "http://192.168.96.97:8080/assets/html/topic5.html";
-                WebViewActivity.startWebViewActivity(Main2Activity.this, url, apk_sdk_path);
+                DynamicWebviewActivity.startWebViewActivity(Main2Activity.this, url, apk_sdk_path);
             }
         });
 

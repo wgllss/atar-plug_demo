@@ -10,7 +10,6 @@ import android.webkit.WebView;
 
 import com.common.framework.application.AppConfigModel;
 import com.common.framework.interfaces.HandlerListener;
-import com.common.framework.plugin.PluginManager;
 import com.common.framework.utils.ZzLog;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 
@@ -37,7 +36,7 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
      */
     private String strOfflineResources = "";
 
-    public OffineImplWebViewClient(WebViewActivity activity, BridgeWebView webView,
+    public OffineImplWebViewClient(DynamicWebviewActivity activity, BridgeWebView webView,
                                    HandlerListener onHandlerDataListener) {
         super(activity, webView, onHandlerDataListener);
         strOfflineResources = AppConfigModel.getInstance().getString(HOST_OFFINE_FILE_PATH_KEY, "");
@@ -67,8 +66,8 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
                     mimeType = "image/png";
                     offline_res = "img/";// 主要加载预置表情
                 } else if (suffix.endsWith(".html")) {
-                    mimeType = "text/html";
-                    offline_res = "html/";// 主要加载预置表情
+//                    mimeType = "text/html";
+//                    offline_res = "html/";// 主要加载预置表情
                 } else {
                     if (url.contains("img/null")) {
                         return super.shouldInterceptRequest(view, url);

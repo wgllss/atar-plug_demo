@@ -31,9 +31,9 @@ import android.widget.EditText;
  */
 public class ImplWebChromeClient extends WebChromeClient {
 
-    private WebViewActivity activity;
+    private DynamicWebviewActivity activity;
 
-    public ImplWebChromeClient(WebViewActivity activity) {
+    public ImplWebChromeClient(DynamicWebviewActivity activity) {
         super();
         this.activity = activity;
     }

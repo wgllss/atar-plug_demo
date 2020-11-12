@@ -35,11 +35,11 @@ import java.net.URLDecoder;
 public class ImplWebViewClient extends BridgeWebViewClient {
     protected String TAG = ImplWebViewClient.class.getSimpleName();
 
-    protected WebViewActivity activity;
+    protected DynamicWebviewActivity activity;
 
     private HandlerListener onHandlerDataListener;
 
-    public ImplWebViewClient(WebViewActivity activity, BridgeWebView webView, HandlerListener
+    public ImplWebViewClient(DynamicWebviewActivity activity, BridgeWebView webView, HandlerListener
             onHandlerDataListener) {
         super(webView);
         this.activity = activity;
@@ -145,7 +145,7 @@ public class ImplWebViewClient extends BridgeWebViewClient {
             webSettings.setDefaultTextEncodingName("UTF-8");
             webSettings.setJavaScriptEnabled(true);
             webSettings.setAllowFileAccess(true);
-            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
             webSettings.setTextSize(WebSettings.TextSize.NORMAL);
             webSettings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
             webSettings.setDatabaseEnabled(true);

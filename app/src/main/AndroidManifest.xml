@@ -56,7 +56,7 @@
             android:name=".activity.Main3Activity"
             android:theme="@style/translucent" />
         <activity
-            android:name=".activity.web.WebViewActivity"
+            android:name=".activity.web.DynamicWebviewActivity"
             android:theme="@style/translucent" />
         <activity
             android:name=".activity.MainWebViewActivity"

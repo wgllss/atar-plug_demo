@@ -2,26 +2,17 @@ package com.atar.host.app.activity.web;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Message;
-import android.preference.TwoStatePreference;
 
 import com.atar.host.app.R;
-import com.atar.host.app.activity.CommTitleResouseActivity;
 import com.atar.host.app.emuns.EnumMsgWhat;
 import com.atar.host.app.presenter.TestPresenter;
-import com.atar.host.app.utils.AppConfigUtils;
 import com.atar.host.app.activity.RefreshLayoutActivity;
 import com.atar.host.app.viewmodels.TestViewModel;
 import com.common.business.code.utils.IntentUtil;
-import com.common.framework.application.CrashHandler;
 import com.common.framework.interfaces.HandlerListener;
-import com.common.framework.plugin.PluginListener;
-import com.common.framework.plugin.PluginManager;
 import com.common.framework.utils.ShowLog;
-import com.common.framework.widget.CommonToast;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
@@ -30,9 +21,9 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 
-public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPresenter> implements HandlerListener {
+public class DynamicWebviewActivity extends RefreshLayoutActivity<TestViewModel, TestPresenter> implements HandlerListener {
 
-    private String TAG = WebViewActivity.class.getSimpleName();
+    private String TAG = DynamicWebviewActivity.class.getSimpleName();
 
     private BridgeWebView webview;
     private String url;
@@ -40,6 +31,7 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
     private boolean isWebViewLoadSuccess;
     //暂存带有html返回结果
     private Map<String, String> tempJson = new HashMap<String, String>();
+    private NetWorkBridgeHandler netWorkBridgeHandler = new NetWorkBridgeHandler(this, tempJson);
     private ImplInAndroidScript mImplInAndroidScript = new ImplInAndroidScript(tempJson);
 
     private long time;
@@ -67,7 +59,11 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
         setActivityTitle("宿主html页");
 
 //        autoRefresh();
-        showloading();
+//        showloading();
+
+        webview.registerHandler("native_networkRequest", netWorkBridgeHandler); //webview 单独 注册 调用原生方法 网络请求
+        NativeRegisterBridgeUitls.initRegisterHandler(this, webview);//注册各种普通方法
+
         url = getIntent().getStringExtra(URL_KEY);
         /* 向html传入初始参数 start */
         String mode = getIntent().getStringExtra(PULL_TO_REFRESH_MODE_KEY);
@@ -87,7 +83,7 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
                 ShowLog.e(TAG, "加载完成，耗时:" + (lasttime - time) + "ms");
 
                 isWebViewLoadSuccess = true;
-                hideLoading();
+//                hideLoading();
                 webview.send(optionsJson);//传入数据到h5
 //                if (mImplOnTouchChanceTextSizeListener != null) {
 //                    mImplOnTouchChanceTextSizeListener.setWebViewLoadSuccess(isWebViewLoadSuccess);
@@ -147,7 +143,7 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
 //        PluginManager.getInstance().loadApk(apk_sdk_path, new PluginListener() {
 //            @Override
 //            public void success(Resources pluginResources, PackageInfo pluginPackageArchiveInfo) {
-        Intent intent = new Intent(context, WebViewActivity.class);
+        Intent intent = new Intent(context, DynamicWebviewActivity.class);
         intent.putExtra(URL_KEY, url);
         IntentUtil.startOtherActivity(context, intent);
 //            }

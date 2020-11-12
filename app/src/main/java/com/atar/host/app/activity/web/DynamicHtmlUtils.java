@@ -78,7 +78,7 @@ public class DynamicHtmlUtils {
      * @modifyAuthor:
      * @description:
      */
-    public static String getInitValue(WebViewActivity activity, HandlerListener onHandlerDataListener, BridgeWebView mWebView, String options, String mode, String
+    public static String getInitValue(DynamicWebviewActivity activity, HandlerListener onHandlerDataListener, BridgeWebView mWebView, String options, String mode, String
             url) {
         String optionsJson = "";
         /* 向html传入初始参数 start */
@@ -171,7 +171,7 @@ public class DynamicHtmlUtils {
      * @modifyAuthor:
      * @description:
      */
-    public static void loadLocalHtml(WebViewActivity activity, WebView
+    public static void loadLocalHtml(DynamicWebviewActivity activity, WebView
             mWebView, String url) {
         try {
             File file = new File(SAVE_HTML_PATH);
