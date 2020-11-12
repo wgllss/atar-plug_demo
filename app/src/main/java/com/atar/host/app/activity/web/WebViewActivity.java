@@ -59,13 +59,15 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
         refreshLayout.setOnLoadMoreListener(this);
         setEnableRefresh(true);
         setEnableLoadMore(true);
-        autoRefresh();
     }
 
     @Override
     protected void initValue() {
         super.initValue();
         setActivityTitle("宿主html页");
+
+//        autoRefresh();
+        showloading();
         url = getIntent().getStringExtra(URL_KEY);
         /* 向html传入初始参数 start */
         String mode = getIntent().getStringExtra(PULL_TO_REFRESH_MODE_KEY);
@@ -79,15 +81,13 @@ public class WebViewActivity extends RefreshLayoutActivity<TestViewModel, TestPr
         switch (msg.what) {
             case EnumMsgWhat.msgWhat_handler:// 加载html开始
                 time = System.currentTimeMillis();
-//                showloading();
                 break;
             case EnumMsgWhat.msgWhat_handler_1:// 加载html初始化完成
-                finishBoth();
                 long lasttime = System.currentTimeMillis();
                 ShowLog.e(TAG, "加载完成，耗时:" + (lasttime - time) + "ms");
 
                 isWebViewLoadSuccess = true;
-//                hideLoading();
+                hideLoading();
                 webview.send(optionsJson);//传入数据到h5
 //                if (mImplOnTouchChanceTextSizeListener != null) {
 //                    mImplOnTouchChanceTextSizeListener.setWebViewLoadSuccess(isWebViewLoadSuccess);

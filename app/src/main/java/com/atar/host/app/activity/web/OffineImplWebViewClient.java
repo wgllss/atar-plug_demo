@@ -47,14 +47,14 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
     @SuppressLint("NewApi")
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-//        ZzLog.e(TAG, "shouldInterceptRequest thread id: " + Thread.currentThread().getId() +
-//                "---url-->" + url);
         int lastSlash = url.lastIndexOf("/");
         if (lastSlash != -1) {
             String suffix = url.substring(lastSlash + 1);
             if (strOfflineResources != null && strOfflineResources.length() > 0 && suffix != null
                     && suffix.length() > 0 && strOfflineResources.contains(suffix) && activity !=
                     null) {
+                ZzLog.e(TAG, "shouldInterceptRequest thread id: " + Thread.currentThread().getId() +
+                        "---url-->" + url);
                 String mimeType = "";
                 String offline_res = "";
                 if (suffix.endsWith(".js")) {
@@ -76,11 +76,8 @@ public class OffineImplWebViewClient extends ImplWebViewClient {
                 }
                 try {
                     if (!TextUtils.isEmpty(offline_res)) {
-                        offline_res = "file:///android_asset/" + offline_res;
-                        ZzLog.e(TAG, offline_res + suffix);
-                        return super.shouldInterceptRequest(view, offline_res);
-//                        InputStream is = activity.getAssets().open(offline_res + suffix);
-//                        return new WebResourceResponse(mimeType, "UTF-8", is);
+                        InputStream is = activity.getAssets().open(offline_res + suffix);
+                        return new WebResourceResponse(mimeType, "UTF-8", is);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

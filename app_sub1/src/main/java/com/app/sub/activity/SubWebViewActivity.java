@@ -42,6 +42,7 @@ public class SubWebViewActivity extends CommTitleResouseActivity {
 
         WebView webView = findViewById(R.id.webview);
         webView.setWebViewClient(new ImplWebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("http://192.168.96.97:8080/assets/html/topic5.html");
     }
 
@@ -90,7 +91,7 @@ public class SubWebViewActivity extends CommTitleResouseActivity {
                     try {
                         if (!TextUtils.isEmpty(offline_res)) {
                             ZzLog.e(TAG, offline_res + suffix);
-                            InputStream is = thisContext.getAssets().open(offline_res + suffix);
+                            InputStream is = thisContext.getHostAssets().open(offline_res + suffix);
                             return new WebResourceResponse(mimeType, "UTF-8", is);
                         }
                     } catch (Exception e) {

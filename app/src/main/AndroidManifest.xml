@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.atar.host.app">
+
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许程序设置内置sd卡的写权限 -->
@@ -48,16 +49,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.proxy.ProxyActivity"
             android:theme="@style/translucent" />
         <activity
             android:name=".activity.Main3Activity"
-            android:theme="@style/translucent"></activity>
-
+            android:theme="@style/translucent" />
         <activity
             android:name=".activity.web.WebViewActivity"
+            android:theme="@style/translucent" />
+        <activity
+            android:name=".activity.MainWebViewActivity"
             android:theme="@style/translucent"></activity>
     </application>
 

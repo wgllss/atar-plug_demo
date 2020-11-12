@@ -2,6 +2,8 @@ package com.common.framework.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -123,6 +125,14 @@ public abstract class CommonActivity extends AppCompatActivity implements OnOpen
         if (mDrawerBack != null) {
             mDrawerBack.setOnDrawerBackEnabled(enable);
         }
+    }
+
+    public AssetManager getHostAssets() {
+        return super.getAssets();
+    }
+
+    public Resources getHostResources() {
+        return super.getResources();
     }
 
     /**

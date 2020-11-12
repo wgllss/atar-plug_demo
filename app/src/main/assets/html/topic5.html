@@ -8,8 +8,8 @@
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="width">
 <meta name="format-detection" content="telephone=no">
-<script type="text/javascript" src="../js/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/WebViewJavascriptBridge.js"></script>
 <script type="text/javascript" src="../js/jquery.lazyload.js"></script>
 <style>
 *{
@@ -460,7 +460,7 @@ vertical-align:30%;
 <body>
 <div class="topicPage" id="topicPage">
     <div id="topicTitle" class="topicTitle">幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参幽兰天下：9月2日涛金早参
-        幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参
+        幽兰天下：9月3日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参
         幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参 幽兰天下：9月2日涛金早参
     </div>
     <div class="top_bar">
@@ -847,109 +847,5 @@ vertical-align:30%;
 
 </body>
 <script type="text/javascript">
-
-	var webviewAndroidScript =window.injs;
-	var seq = 0;
-
-	function initValue(options) {
-        seq = options;
-        webviewAndroidScript.setOnDrawerBackEnabled("1");
-//        webviewAndroidScript.setRefreshing();
-    }
-
-	function onPullDown() {
-	    //String msgWhat, String whichThred1, String whichThred2, String url, String requestMethod, String paramsJson, final String specialHtml
-        var paramsJson = "{\"seq\":"+seq+"}";
-		webviewAndroidScript.networkRequest("7001","0","0","comp/dav/getDvViewPoint","GET",paramsJson,"0");
-    }
-
-    function onPullUp() {
-        webviewAndroidScript.onStopRefresh();
-    }
-
-    function netWorkCallBack(strMsgWhat, strMsgArg1, strMsgArg2, json) {
-		if(strMsgWhat == 7001){//获取最终页面结果
-            json= JSON.parse(json);
-            var resultStatus = webviewAndroidScript.isStatus(json.errorCode, json.status);
-            if (resultStatus == '1') {
-                if (json.dto) {
-					if("Y" == json.dto.imDv){
-
-					}else{
-
-					}
-					if(json.dto.dvViewPoint){
-					    var html = '<div id="topicTitle" class="topicTitle"></div><div class="top_bar"><div class="left"><ul><li><img src="../img/tx.png" width="17" height="17"/></li><li class="number" style="margin-left:10px;">68475</li></ul></div><div class="right">10-13 13:02</div></div>';
-					}
-                }
-		    }else{
-                webviewAndroidScript.toast(json.errorMessage);
-			}
-		}
-    }
-    
-    function changeTab(i) {
-        switch (i){
-         case 0:
-                 $(".tab_div_content1").show();
-                 $(".tab_div_content2").hide();
-                 $(".self_message").css("border-bottom-width","2px");
-                 $(".best_message").css("border-bottom-width","0px");
-                 $(".best_message").css("color","#222222");
-                 $(".self_message").css("color","#1191f6");
-             break;
-         case 1:
-                 $(".tab_div_content1").hide();
-                 $(".tab_div_content2").show();
-                 $(".self_message").css("border-bottom-width","0px");
-                 $(".best_message").css("border-bottom-width","2px");
-                 $(".best_message").css("color","#1191f6");
-                    $(".self_message").css("color","#222222");
-            break;
-        }
-    }
-
-	setTimeout(function() {
-        $("img.lazy").lazyload();
-	 	$(".box li a img").lazyload();
-	 },300);
-
-
-	$("div[class^='reply_all_item_'] .reply_down .reply_down_right a").click(function(){
-		//if($("div[class^='reply_all_item_'] .reply_down .reply_down_left").length > 0){
-//			var replyID = $(this).closest("div[class^='reply_all_item_']").attr("data-replyID");
-//			alert(replyID);
-//			alert($("div[class^='reply_all_item_'] .reply_down .reply_down_right span").html());
-		//}else{
-		//	alert("不存在");
-		//}
-		//alert($(this).parents("div[class^='reply_all_item_']").attr("data-ID")+"--"+$(this).attr("data-type"));
-	});
-
-
-
-
-	 $(".buy_button").click(function(){//点赞
-	 	alert("51515");
-	  		 //$("#handler_dian_zan span").html( $("#-1000").html());
-	 });
-
-
-	 $("div[class^='reply_all_item_']").mousedown(function() {
-
-	});
-
-
-
-	    //设置文字大小
-    function setTextSize(size){
-    	if(size=='L'){
-    		$("P").css("font-size", "20px");
-    	}else if(size=='M'){
-    		$("P").css("font-size", "16px");
-    	}else if(size=='S'){
-    		$("P").css("font-size", "14px");
-    	}
-    }
 </script>
 </html>

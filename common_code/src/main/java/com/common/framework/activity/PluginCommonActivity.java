@@ -333,6 +333,7 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
             setOnOpenDrawerCompleteListener(mOnOpenDrawerCompleteListener);
         }
     }
+
     @Override
     public void setOnBackFacusView(View view) {
         if (isPlugin) {
