@@ -10,6 +10,7 @@ import com.common.framework.stack.ActivityManager;
 import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
 import com.common.framework.widget.CommonToast;
+import com.common_business_code.R;
 
 /**
  * @author：atar
@@ -34,6 +35,7 @@ public abstract class BaseActivity extends PluginCommonActivity {
         bindEvent();
         initValue();
     }
+
     @Override
     public void onOpenDrawerComplete() {
         IntentUtil.finishWithOutTween(thisContext);
@@ -62,7 +64,7 @@ public abstract class BaseActivity extends PluginCommonActivity {
     public void showloading(String showText) {
         try {
             if (null == loading) {
-                loading = new CommonLoadingView(this);
+                loading = new CommonLoadingView(thisContext, getLoadingResID());
             }
             if (loading.isShowing()) {
                 loading.dismiss();
@@ -71,6 +73,10 @@ public abstract class BaseActivity extends PluginCommonActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected int getLoadingResID() {
+        return R.layout.common_loading;
     }
 
     public void hideLoading() {

@@ -48,5 +48,4 @@ dependencies {
     compile 'com.facebook.fresco:webpsupport:1.1.0'
     compile 'com.facebook.fresco:animated-gif:1.1.0'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
-    compile 'com.wang.avi:library:2.1.3'
 }

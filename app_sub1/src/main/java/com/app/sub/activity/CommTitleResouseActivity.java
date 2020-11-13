@@ -23,6 +23,11 @@ public class CommTitleResouseActivity<VM extends BaseViewModel, P extends BasePr
     }
 
     @Override
+    protected int getLoadingResID() {
+        return R.layout.common_loading;
+    }
+
+    @Override
     public void initControl(@Nullable Bundle savedInstanceState) {
         super.initControl(savedInstanceState);
         setTitleBarUI(R.id.txt_activity_common_host_title, R.id.img_back);

@@ -15,7 +15,7 @@ public class DialogLiveData<T> extends MutableLiveData<T> {
 
     public void setValue(boolean isShow) {
         bean.setShow(isShow);
-        bean.setMsg("");
+        bean.setMsg("请稍候");
         setValue((T) bean);
     }
 

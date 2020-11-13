@@ -43,7 +43,7 @@ public abstract class CommonTitleActivity<VM extends BaseViewModel, P extends Ba
 
     @Override
     protected void bindEvent() {
-
+        super.bindEvent();
     }
 
     @Override

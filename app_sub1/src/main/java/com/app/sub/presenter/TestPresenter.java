@@ -5,6 +5,7 @@ import com.app.sub.net.EnumMsgWhat;
 import com.app.sub.net.NetWorkInterface;
 import com.app.sub.viewmodels.TestViewModel;
 import com.common.business.code.activity.BasePresenter;
+import com.common.business.code.bean.DialogBean;
 import com.common.framework.utils.ZzLog;
 
 import androidx.lifecycle.LifecycleOwner;
@@ -17,6 +18,7 @@ import androidx.lifecycle.LifecycleOwner;
 public class TestPresenter extends BasePresenter<TestViewModel> {
 
     public void getposmedialistwithoutlogin(LifecycleOwner owner) {
+        viewModel.showDialog.setValue(true);
         NetWorkInterface.getposmedialistwithoutlogin(owner, this);
     }
 
@@ -29,6 +31,7 @@ public class TestPresenter extends BasePresenter<TestViewModel> {
                     if (mMediaData != null) {
                         ZzLog.e(mMediaData.toString());
                         viewModel.mediaData.setValue(mMediaData);
+                        viewModel.showDialog.setValue(false);
                     } else {
                         ZzLog.e("null");
                     }
@@ -40,5 +43,6 @@ public class TestPresenter extends BasePresenter<TestViewModel> {
     @Override
     public void onError(int what, int which1, int which2, int which3, int code, String errorMessage, String data) {
         viewModel.error.setValue(errorMessage);
+        viewModel.showDialog.setValue(false);
     }
 }

@@ -2,8 +2,11 @@ package com.common.business.code.activity;
 
 import android.os.Bundle;
 
+import com.common.business.code.bean.DialogBean;
 import com.common.business.code.lifecyle.BaseViewModel;
+import com.common.framework.widget.CommonToast;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 /**
@@ -49,4 +52,25 @@ public abstract class BaseViewModelActivity<VM extends BaseViewModel, P extends 
 
     protected abstract Class<VM> getModelClass();
 
+    @Override
+    protected void bindEvent() {
+        if(viewModel!=null){
+            viewModel.showDialog.observe(thisContext, new Observer<DialogBean>() {
+                @Override
+                public void onChanged(DialogBean bean) {
+                    if (bean.isShow()) {
+                        showloading(bean.getMsg());
+                    } else {
+                        hideLoading();
+                    }
+                }
+            });
+            viewModel.error.observe(this, new Observer<String>() {
+                @Override
+                public void onChanged(String obj) {
+                    CommonToast.show(obj);
+                }
+            });
+        }
+    }
 }
