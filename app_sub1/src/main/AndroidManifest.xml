@@ -49,14 +49,15 @@
             android:theme="@style/translucent" />
         <activity
             android:name=".activity.MainSubFragmentActivity"
-            android:theme="@style/translucent"></activity>
+            android:theme="@style/translucent" />
         <activity
             android:name=".activity.ViewPagerActivity"
-            android:theme="@style/translucent"></activity>
-
-
+            android:theme="@style/translucent" />
         <activity
             android:name=".activity.MainSub3Activity"
+            android:theme="@style/translucent" />
+        <activity
+            android:name=".activity.MainSub4Activity"
             android:theme="@style/translucent"></activity>
     </application>
 
