@@ -89,11 +89,27 @@ public class PluginManager {
                     final PackageManager packageManager = context.getPackageManager();
                     final PackageInfo packageInfo = packageManager.getPackageArchiveInfo(apkPath, flags);
                     if (packageInfo == null) {
+                        if (mPluginListener != null) {
+                            CommonHandler.getInstatnce().getHandler().post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPluginListener.fail(new Exception("插件不存在"));
+                                }
+                            });
+                        }
                         return;
                     }
 
                     final ApplicationInfo applicationInfo = packageInfo.applicationInfo;
                     if (applicationInfo == null) {
+                        if (mPluginListener != null) {
+                            CommonHandler.getInstatnce().getHandler().post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mPluginListener.fail(new Exception("插件不存在"));
+                                }
+                            });
+                        }
                         return;
                     }
                     applicationInfo.sourceDir = applicationInfo.publicSourceDir = apkPath;
@@ -107,7 +123,7 @@ public class PluginManager {
 //                     Method addAssetPath = AssetManager.class.getMethod("addAssetPath", String.class);
 //                     addAssetPath.invoke(assets, apkPath);
 //                     pluginResources = new Resources(assets, context.getResources().getDisplayMetrics(), context.getResources().getConfiguration());
-                     mAssetManager = pluginResources.getAssets();
+                    mAssetManager = pluginResources.getAssets();
 
                     //不需要设置主题 坑位
                     // mTheme = pluginResources.newTheme();
@@ -122,7 +138,12 @@ public class PluginManager {
                     }
                 } catch (Exception e) {
                     if (mPluginListener != null) {
-                        mPluginListener.fail(e);
+                        CommonHandler.getInstatnce().getHandler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPluginListener.fail(e);
+                            }
+                        });
                     }
                 }
             }

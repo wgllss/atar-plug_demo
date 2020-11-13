@@ -14,58 +14,11 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18dp" />
 
-    <!--<TextView-->
-    <!--android:id="@+id/txt_click_net99"-->
-    <!--android:layout_width="200dp"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:background="@color/stock_up_color"-->
-    <!--android:gravity="center"-->
-    <!--android:text="点击获取数据"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="16dp" />-->
 
-    <TextView
-        android:id="@+id/txt_to_plugin"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="到插件内"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/txt_web"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="BridgeWebView 加载 html"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/txt_webview"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="WebView 加载 html"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/txt_download"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="下载插件"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

@@ -60,6 +60,9 @@
             android:theme="@style/translucent" />
         <activity
             android:name=".activity.MainWebViewActivity"
+            android:theme="@style/translucent" />
+        <activity
+            android:name=".activity.SetHostIPAddressActivity"
             android:theme="@style/translucent"></activity>
     </application>
 

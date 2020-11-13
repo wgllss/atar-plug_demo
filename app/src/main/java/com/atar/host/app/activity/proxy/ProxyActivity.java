@@ -163,6 +163,7 @@ public class ProxyActivity extends CommonActivity {
 
                 @Override
                 public void fail(Exception e) {
+                    context.hideLoading();
                     CommonToast.show(CrashHandler.crashToString(e));
                 }
             });
