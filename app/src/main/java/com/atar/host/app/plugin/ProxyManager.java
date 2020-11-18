@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import com.atar.host.app.activity.proxy.ProxyActivity;
 import com.common.framework.activity.CommonActivity;
@@ -11,6 +12,8 @@ import com.common.framework.interfaces.PluginInterface;
 import com.common.framework.plugin.PluginManager;
 import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -168,6 +171,44 @@ public class ProxyManager implements PluginInterface<CommonActivity> {
     public void onOpenDrawerComplete() {
         if (pluginInterface != null) {
             pluginInterface.onOpenDrawerComplete();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return pluginInterface == null ? false : pluginInterface.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return pluginInterface == null ? false : pluginInterface.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if (pluginInterface != null) {
+            pluginInterface.onWindowFocusChanged(hasFocus);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (pluginInterface != null) {
+            pluginInterface.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        if (pluginInterface != null) {
+            pluginInterface.onAttachedToWindow();
+        }
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        if (pluginInterface != null) {
+            pluginInterface.onDetachedFromWindow();
         }
     }
 }

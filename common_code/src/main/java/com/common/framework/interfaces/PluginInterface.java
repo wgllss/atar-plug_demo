@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 /**
@@ -50,4 +52,16 @@ public interface PluginInterface<A extends FragmentActivity> {
     void onChangeSkin(int skinType);
 
     void onOpenDrawerComplete();
+
+    boolean onKeyDown(int keyCode, KeyEvent event);
+
+    boolean onKeyUp(int keyCode, KeyEvent event);
+
+    void onWindowFocusChanged(boolean hasFocus);
+
+    void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
+
+    void onAttachedToWindow();
+
+    void onDetachedFromWindow();
 }

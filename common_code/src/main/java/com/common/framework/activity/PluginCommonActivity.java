@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -343,4 +344,58 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (isPlugin) {
+            return thisContext.onKeyDown(keyCode, event);
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (isPlugin) {
+            return thisContext.onKeyUp(keyCode, event);
+        } else {
+            return super.onKeyUp(keyCode, event);
+        }
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if (isPlugin) {
+            thisContext.onWindowFocusChanged(hasFocus);
+        } else {
+            super.onWindowFocusChanged(hasFocus);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (isPlugin) {
+            thisContext.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        if (isPlugin) {
+            thisContext.onDetachedFromWindow();
+        } else {
+            super.onDetachedFromWindow();
+        }
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        if (isPlugin) {
+            thisContext.onDetachedFromWindow();
+        } else {
+            super.onDetachedFromWindow();
+        }
+    }
 }

@@ -40,7 +40,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
     private final int INSTALL_PACKAGES_REQUESTCODE = 12334;
     private final int GET_UNKNOWN_APP_SOURCES = 12338;
 
-    private String ip;
+    private String ip = "192.168.96.84";
     private String url;
 
     private String strDownloadFileName;

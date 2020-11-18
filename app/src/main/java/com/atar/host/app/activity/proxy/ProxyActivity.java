@@ -163,8 +163,9 @@ public class ProxyActivity extends CommonActivity {
 
                 @Override
                 public void fail(Exception e) {
+                    ZzLog.e(e);
                     context.hideLoading();
-                    CommonToast.show(CrashHandler.crashToString(e));
+                    CommonToast.show(e.getMessage());
                 }
             });
         } else {
