@@ -70,7 +70,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':common_business_code')
 //    implementation project(':common_resource')
-//    implementation project(':app_atar_skin')
+    implementation project(':app_atar_skin')
 
 //    compileOnly 'io.reactivex.rxjava2:rxandroid:2.1.1'
 //    compileOnly 'io.reactivex.rxjava2:rxjava:2.1.1'

@@ -3,7 +3,6 @@
     android:id="@+id/layout_activity_title_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/activity_title_bar_layout_height"
-    android:background="@color/common_top_title_bar_bg_day"
     android:paddingTop="36dp">
 
     <ImageView
@@ -11,8 +10,7 @@
         android:layout_width="@dimen/activity_title_bar_height"
         android:layout_height="@dimen/activity_title_bar_height"
         android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/leftw" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/txt_activity_common_host_title"
@@ -20,6 +18,5 @@
         android:layout_height="@dimen/activity_title_bar_height"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
-        android:textColor="@color/white"
         android:textSize="20dp" />
 </FrameLayout>
