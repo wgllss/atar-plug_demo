@@ -1,29 +1,15 @@
-apply plugin: 'com.android.application'
-//插件中没法使用databinding,so库加载
+apply plugin: 'com.android.library'
+//common_resource 下放置某公司下通用公用资源，和 common_business_code分开为了 方便 app可以统一处理换皮肤包
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.atar.plugin.sub1.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1000
         versionName "1.0.00"
-        multiDexEnabled true
-        aaptOptions.cruncherEnabled = false
-        aaptOptions.useNewCruncher = false
-
-        ndk {
-//根据需要 自行选择添加的对应cpu类型的.so库。
-            abiFilters 'armeabi'//, 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-// 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-        }
-    }
-
-    dataBinding {
-        enabled = false
     }
 
     signingConfigs {
@@ -67,19 +53,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':common_business_code')
-//    implementation project(':common_resource')
-//    implementation project(':app_atar_skin')
 
-//    compileOnly 'io.reactivex.rxjava2:rxandroid:2.1.1'
-//    compileOnly 'io.reactivex.rxjava2:rxjava:2.1.1'
-    compileOnly 'com.squareup.retrofit2:retrofit:2.5.0'
-    compileOnly 'com.squareup.retrofit2:converter-scalars:2.5.0'
-    compileOnly 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    compileOnly 'com.squareup.okhttp3:logging-interceptor:4.0.0'
-    compileOnly 'com.squareup.retrofit2:converter-gson:2.5.0'
-    compileOnly 'com.squareup.retrofit2:converter-scalars:2.1.0'
-    compileOnly 'com.squareup.okio:okio:2.2.2'
 
 }

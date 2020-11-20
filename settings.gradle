@@ -1,1 +1,6 @@
-include ':app', ':common_resource', ':common_business_code', ':common_code', ':app_sub1',':Jsbridgelibrary'
+include ':app', ':common_resource', ':common_business_code', ':common_code', ':app_sub1',':Jsbridgelibrary', ':app_atar_skin'
+
+
+
+
+
