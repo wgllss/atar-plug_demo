@@ -28,5 +28,11 @@
     <string name="ehttp_eunknownhost_msg">服务器找不到主机</string>
     <string name="ehttp_unknownservice_msg">服务器出错了</string>
     <string name="ehttp_unsupportedencoding_msg">通信编码出错</string>
+
     <!-- 异常错误提示  by Atar end -->
+
+    <string name="common_tab_bg_color_array_name">common_top_title_bar_bg_color</string>
+    <string name="common_activity_title_color_array_name">common_activity_title_color</string>
+    <string name="common_top_title_bar_back_drawable_array_name">common_top_title_bar_back</string>
+    <string name="background_color_name">white</string>
 </resources>

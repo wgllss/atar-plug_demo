@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.common.business.code.lifecyle.BaseViewModel;
@@ -23,8 +24,9 @@ import androidx.lifecycle.ViewModel;
  */
 public abstract class CommonTitleActivity<VM extends BaseViewModel, P extends BasePresenter> extends BaseViewModelActivity<VM, P> implements View.OnClickListener {
     protected View commonContentBg;
-    private TextView txt_activity_title;
-    private View img_back;
+    protected TextView txt_activity_title;
+    protected ImageView img_back;
+    protected View layout_activity_title_bar;
 
     @Override
     public void initControl(@Nullable Bundle savedInstanceState) {
@@ -55,9 +57,10 @@ public abstract class CommonTitleActivity<VM extends BaseViewModel, P extends Ba
      * @param txt_activity_title_ResID :titleBar 文字
      * @param img_back_resID           ：返回控件
      */
-    protected void setTitleBarUI(int txt_activity_title_ResID, int img_back_resID) {
+    protected void setTitleBarUI(int txt_activity_title_ResID, int img_back_resID, int layout_activity_title_barID) {
         this.img_back = findViewById(img_back_resID);
         this.txt_activity_title = findViewById(txt_activity_title_ResID);
+        this.layout_activity_title_bar = findViewById(layout_activity_title_barID);
         if (img_back != null) {
             img_back.setOnClickListener(new View.OnClickListener() {
                 @Override

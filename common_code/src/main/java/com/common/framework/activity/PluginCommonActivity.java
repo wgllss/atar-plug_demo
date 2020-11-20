@@ -16,6 +16,7 @@ import android.view.WindowManager;
 
 import com.common.framework.interfaces.OnOpenDrawerCompleteListener;
 import com.common.framework.interfaces.PluginInterface;
+import com.common.framework.utils.ZzLog;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -110,6 +111,9 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
 
     @Override
     public void onChangeSkin(int skinType) {
+        if (!isPlugin) {
+            super.onChangeSkin(skinType);
+        }
     }
 
     @Override
@@ -397,4 +401,5 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
             super.onDetachedFromWindow();
         }
     }
+
 }

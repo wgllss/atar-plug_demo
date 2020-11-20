@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.interfaces.OnOpenDrawerCompleteListener;
+import com.common.framework.skin.SkinMode;
+import com.common.framework.skin.SkinResourcesManager;
 import com.common.framework.stack.ActivityManager;
 import com.common.framework.utils.NoFastClickUtils;
+import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.StatusBarUtils;
 import com.common.framework.widget.DrawerBack;
 
@@ -31,6 +35,8 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public abstract class CommonActivity extends AppCompatActivity implements OnOpenDrawerCompleteListener {
 
+    private String TAG = CommonActivity.class.getSimpleName();
+
     public CompositeDisposable compositeDisposable = new CompositeDisposable();
     /* 从左向右滑动代替返回已封装 ,onCreate 实例化一个，其它只需要继承此类，不需要的调用setOnDrawerBackEnabled（）方法 */
     private DrawerBack mDrawerBack;
@@ -43,6 +49,28 @@ public abstract class CommonActivity extends AppCompatActivity implements OnOpen
         mDrawerBack = new DrawerBack(this);
         mDrawerBack.setOnOpenDrawerCompleteListener(this);
         StatusBarUtils.translucentStatusBar(this, null);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadSkin(getCurrentSkinType());
+    }
+
+    /**
+     * 获取当前皮肤类型
+     *
+     * @return
+     * @author :Atar
+     * @createTime:2014-8-19下午5:51:18
+     * @version:1.0.0
+     * @modifyTime:
+     * @modifyAuthor:
+     * @description:
+     */
+    public int getCurrentSkinType() {
+        return AppConfigModel.getInstance().getInt(SkinMode.SKIN_MODE_KEY, 0);
     }
 
     @Override
@@ -251,6 +279,36 @@ public abstract class CommonActivity extends AppCompatActivity implements OnOpen
     }
 
     /**
+     * 改变皮肤
+     *
+     * @author :Atar
+     * @createTime:2017-9-18下午1:34:13
+     * @version:1.0.0
+     * @modifyTime:
+     * @modifyAuthor:
+     * @description:
+     */
+    public void loadSkin(final int skinType) {
+        if (SkinResourcesManager.isLoadApkSkin) {
+            if (SkinResourcesManager.getInstance(this).getResources() != null) {
+                onChangeSkin(getCurrentSkinType());
+                ShowLog.i(TAG, "加载已加载好的皮肤");
+            } else {
+                ShowLog.i(TAG, "开始加载皮肤");
+                SkinResourcesManager.getInstance(this).loadSkinResources(new SkinResourcesManager.loadSkinCallBack() {
+
+                    @Override
+                    public void loadSkinSuccess(Resources mResources) {
+                        onChangeSkin(skinType);
+                    }
+                });
+            }
+        } else {
+            onChangeSkin(skinType);
+        }
+    }
+
+    /**
      * 抽象方法监听改变皮肤
      *
      * @param skinType
@@ -261,7 +319,7 @@ public abstract class CommonActivity extends AppCompatActivity implements OnOpen
      * @modifyAuthor:
      * @description:
      */
-    public void ChangeSkin(int skinType) {
+    public void onChangeSkin(int skinType) {
 
     }
 

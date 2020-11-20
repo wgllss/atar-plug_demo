@@ -1,21 +1,17 @@
 package com.atar.host.app.activity.proxy;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import com.atar.host.app.contans.Config;
 import com.atar.host.app.plugin.ProxyManager;
 import com.common.business.code.activity.BaseActivity;
 import com.common.business.code.utils.IntentUtil;
 import com.common.framework.activity.CommonActivity;
-import com.common.framework.application.CrashHandler;
 import com.common.framework.plugin.PluginListener;
 import com.common.framework.plugin.PluginManager;
-import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
 import com.common.framework.widget.CommonToast;
 
@@ -130,8 +126,8 @@ public class ProxyActivity extends CommonActivity {
     }
 
     @Override
-    public void ChangeSkin(int skinType) {
-        super.ChangeSkin(skinType);
+    public void onChangeSkin(int skinType) {
+        super.onChangeSkin(skinType);
         if (mProxyManager != null) {
             mProxyManager.onChangeSkin(skinType);
         }
