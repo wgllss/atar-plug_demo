@@ -14,10 +14,10 @@
         android:layout_height="50dp"
         android:layout_gravity="right|top"
         android:layout_marginTop="70dp"
-        android:visibility="gone"
         android:layout_marginRight="30dp"
-        android:background="@color/transparent3"
+        android:background="#30000000"
         android:gravity="center"
         android:text="3s后跳转"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
 </FrameLayout>

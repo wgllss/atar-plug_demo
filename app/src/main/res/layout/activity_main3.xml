@@ -10,6 +10,6 @@
         android:layout_height="@dimen/activity_title_bar_height"
         android:gravity="center"
         android:text="宿主 2页面"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/holo_red_light" />
 
 </LinearLayout>

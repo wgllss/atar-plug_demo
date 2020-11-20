@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="280dp"
     android:layout_height="260dp"
-    android:background="@color/color_k_game_item_outline_color"
+    android:background="@android:color/holo_blue_bright"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:text="dialog" />
 
     <TextView
@@ -18,8 +18,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@color/stock_up_color"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_red_dark"
         android:textSize="16dp"
         android:text="关闭" />
 </LinearLayout>

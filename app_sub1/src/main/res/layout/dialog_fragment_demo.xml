@@ -9,9 +9,9 @@
         android:id="@+id/edt_content"
         android:layout_width="120dp"
         android:layout_height="80dp"
-        android:background="@color/background"
+        android:background="@android:color/white"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:textSize="15dp" />
 
     <TextView
@@ -19,10 +19,10 @@
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/blue_select_txt"
+        android:background="@android:color/black"
         android:gravity="center"
         android:text="确定"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/txt_close"
@@ -30,8 +30,8 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@color/stock_up_color"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_red_dark"
         android:textSize="16dp"
         android:text="关闭" />
 </LinearLayout>

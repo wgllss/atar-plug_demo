@@ -2,6 +2,7 @@ package com.atar.host.app.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.atar.host.app.R;
@@ -9,10 +10,9 @@ import com.common.framework.activity.CommonActivity;
 import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.skin.SkinMode;
 import com.common.framework.stack.ActivityManager;
-import com.zf.view.UISwitchButton;
 
 public class SettingActivity extends CommTitleResouseActivity implements CompoundButton.OnCheckedChangeListener {
-    public UISwitchButton common_ui_switch_button;
+    public CheckBox common_ui_switch_button;
     @Override
     public void initControl(Bundle savedInstanceState) {
         super.initControl(savedInstanceState);
