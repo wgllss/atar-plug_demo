@@ -2,22 +2,39 @@ package com.atar.host.app.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 
 import com.atar.host.app.R;
+import com.atar.host.app.beans.DynamicSkinBean;
 import com.common.framework.activity.CommonActivity;
 import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.skin.SkinMode;
 import com.common.framework.stack.ActivityManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SettingActivity extends CommTitleResouseActivity implements CompoundButton.OnCheckedChangeListener {
     public CheckBox common_ui_switch_button;
+    private ListView listview;
+
+    /**
+     * SD卡目录 下载 资源文件 皮肤资源
+     */
+    private String SD_PATH = Environment.getExternalStorageDirectory() + "/.Android/.cache/.";
+
+    private List<DynamicSkinBean> list = new ArrayList<DynamicSkinBean>();
+//    private SkinAdapter mSkinAdapter = new SkinAdapter(list);
+
     @Override
     public void initControl(Bundle savedInstanceState) {
         super.initControl(savedInstanceState);
         addContentLayout(R.layout.activity_setting);
         common_ui_switch_button = findViewById(R.id.common_ui_switch_button);
+        listview = findViewById(R.id.listview);
     }
 
     @Override

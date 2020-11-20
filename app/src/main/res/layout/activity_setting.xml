@@ -16,4 +16,10 @@
         android:gravity="center"
         android:text="夜间模式" />
 
+    <ListView
+        android:id="@+id/listview"
+        style="@style/BaseListViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

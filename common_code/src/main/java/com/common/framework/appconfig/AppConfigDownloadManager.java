@@ -13,6 +13,7 @@ import com.common.framework.download.DownLoadFileManager;
 import com.common.framework.http.HttpRequest;
 import com.common.framework.interfaces.HandlerListener;
 import com.common.framework.utils.ShowLog;
+import com.common.framework.utils.ZzLog;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,7 +38,7 @@ public class AppConfigDownloadManager {
 	private static String TAG = AppConfigDownloadManager.class.getSimpleName();
 
 	private static AppConfigDownloadManager instance;
-	public static String defaultVersion = "1.0";
+	public static String defaultVersion = "1.0.00";
 
 	public synchronized static AppConfigDownloadManager getInstance() {
 		if (instance == null) {
@@ -135,6 +136,7 @@ public class AppConfigDownloadManager {
 							String line;
 							// 分行读取
 							while ((line = buffreader.readLine()) != null) {
+								ZzLog.i(line);
 								result += line;
 							}
 							inputreader.close();

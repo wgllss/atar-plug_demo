@@ -24,7 +24,7 @@
     <!-- color 颜色值 #############################  start -->
     <!-- 头部条背景色 -->
     <array name="common_top_title_bar_bg_color">
-        <item>#1191f6</item>
+        <item>#0FF000</item>
         <item>#005e91</item>
     </array>
     <!--

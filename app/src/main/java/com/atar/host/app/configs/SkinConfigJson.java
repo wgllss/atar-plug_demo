@@ -23,4 +23,5 @@ public class SkinConfigJson {
     public List<SkinBean> getAll_skin() {
         return all_skin;
     }
+
 }

@@ -3,9 +3,11 @@
  */
 package com.atar.host.app.aplication;
 
+import com.atar.host.app.BuildConfig;
 import com.atar.host.app.configs.Config;
 import com.common.business.code.application.BaseApplication;
 import com.common.framework.Threadpool.ThreadPoolTool;
+import com.common.framework.appconfig.AppConfigDownloadManager;
 import com.common.framework.application.CrashHandler;
 import com.common.framework.skin.SkinResourcesManager;
 
@@ -29,6 +31,7 @@ public class AtarApplication extends BaseApplication {
         ThreadPoolTool.getInstance().execute(new Runnable() {
             @Override
             public void run() {
+                AppConfigDownloadManager.defaultVersion = BuildConfig.VERSION_NAME;
                 SkinResourcesManager.getInstance(AtarApplication.this).initSkinResources(true,
                         "com.atar.skin", Config.download_skin_url);
                 CrashHandler.getInstance().init(AtarApplication.this);
