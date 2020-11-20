@@ -6,6 +6,7 @@
         <domain includeSubdomains="true">pos-qa.wenxiansheng.cn</domain>
         <domain includeSubdomains="true">pos.wenxiansheng.cn</domain>
         <domain includeSubdomains="true">192.168.1.4</domain>
+        <domain includeSubdomains="true">192.168.96.84</domain>
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>

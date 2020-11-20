@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.atar.host.app.R;
-import com.atar.host.app.contans.Config;
-import com.common.framework.application.AppConfigModel;
+import com.atar.host.app.configs.Config;
+import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.widget.CommonToast;
 
 public class SetHostIPAddressActivity extends CommTitleResouseActivity {

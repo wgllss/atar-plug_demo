@@ -3,13 +3,12 @@ package com.app.sub.activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.app.sub.R;
-import com.common.framework.application.AppConfigModel;
+import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
 

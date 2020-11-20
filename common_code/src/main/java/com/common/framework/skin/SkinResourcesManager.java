@@ -5,12 +5,16 @@ package com.common.framework.skin;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Message;
 
 import com.common.framework.Threadpool.ThreadPoolTool;
+import com.common.framework.appconfig.AppConfigDownloadManager;
 import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.interfaces.HandlerListener;
 import com.common.framework.utils.FileUtils;
@@ -173,11 +177,23 @@ public class SkinResourcesManager {
      */
     private void loadSkinResources(final String skinFilePath, final loadSkinCallBack callback) {
         try {
-            AssetManager assetManager = AssetManager.class.newInstance();
-            Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
-            addAssetPath.invoke(assetManager, skinFilePath);
-            Resources superRes = mContext.getResources();
-            mResources = new Resources(assetManager, superRes.getDisplayMetrics(), superRes.getConfiguration());
+            int flags = PackageManager.GET_META_DATA | PackageManager.GET_ACTIVITIES | PackageManager.GET_SERVICES
+                    | PackageManager.GET_PROVIDERS | PackageManager.GET_RECEIVERS;
+
+            final PackageManager packageManager = mContext.getPackageManager();
+            final PackageInfo packageInfo = packageManager.getPackageArchiveInfo(skinFilePath, flags);
+            final ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+            applicationInfo.sourceDir = applicationInfo.publicSourceDir = skinFilePath;
+            try {
+                mResources = packageManager.getResourcesForApplication(applicationInfo);
+            } catch (PackageManager.NameNotFoundException e) {
+            }
+
+//            AssetManager assetManager = AssetManager.class.newInstance();
+//            Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
+//            addAssetPath.invoke(assetManager, skinFilePath);
+//            Resources superRes = mContext.getResources();
+//            mResources = new Resources(assetManager, superRes.getDisplayMetrics(), superRes.getConfiguration());
             if (callback != null) {
                 callback.loadSkinSuccess(mResources);
             }
@@ -240,8 +256,8 @@ public class SkinResourcesManager {
      */
     public void downLoadSkin(Activity activity, final String newVersion, String replaceMinVersion) {
         if (isLoadApkSkin) {
-//            AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, handlerListener, newVersion, replaceMinVersion, 0, download_skin_Url, 0, true,
-//                    MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME) + "0", SD_PATH);
+            AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, handlerListener, newVersion, replaceMinVersion, 0, download_skin_Url, 0, true,
+                    MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME) + "0", SD_PATH);
         }
     }
 

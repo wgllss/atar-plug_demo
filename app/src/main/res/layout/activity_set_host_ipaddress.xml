@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -10,7 +9,7 @@
         android:id="@+id/edt_text"
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:background="@color/info_tx_color"
+        android:background="#7DC3F0"
         android:gravity="center"
         android:layout_marginTop="20dp"
         android:hint="输入IP地址"
@@ -25,6 +24,6 @@
         android:textSize="15dp"
         android:text="保存"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@color/stock_up_color"/>
+        android:textColor="#FFFFFF"
+        android:background="#ed1616"/>
 </LinearLayout>

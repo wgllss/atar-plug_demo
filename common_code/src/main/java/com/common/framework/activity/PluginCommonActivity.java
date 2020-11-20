@@ -111,6 +111,9 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
 
     @Override
     public void onChangeSkin(int skinType) {
+        if (!isPlugin) {
+            super.onChangeSkin(skinType);
+        }
     }
 
     @Override
@@ -384,9 +387,9 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
     @Override
     public void onAttachedToWindow() {
         if (isPlugin) {
-            thisContext.onDetachedFromWindow();
+            thisContext.onAttachedToWindow();
         } else {
-            super.onDetachedFromWindow();
+            super.onAttachedToWindow();
         }
     }
 
@@ -398,4 +401,5 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
             super.onDetachedFromWindow();
         }
     }
+
 }

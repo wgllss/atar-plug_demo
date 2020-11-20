@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
-import com.common.framework.application.AppConfigModel;
+import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.interfaces.HandlerListener;
 import com.common.framework.utils.ZzLog;
 import com.github.lzyzsd.jsbridge.BridgeWebView;

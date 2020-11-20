@@ -41,7 +41,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.Main2Activity"
+            android:name=".activity.loading.LoadingActivity"
             android:theme="@style/translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,6 +49,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.Main2Activity"
+            android:theme="@style/translucent" />
         <activity
             android:name=".activity.proxy.ProxyActivity"
             android:theme="@style/translucent" />
@@ -63,6 +66,16 @@
             android:theme="@style/translucent" />
         <activity
             android:name=".activity.SetHostIPAddressActivity"
+            android:theme="@style/translucent" />
+
+        <service
+            android:name=".services.DownLoadSevice"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activity.loading.WelcomeActivity" />
+        <activity
+            android:name=".activity.SettingActivity"
             android:theme="@style/translucent"></activity>
     </application>
 

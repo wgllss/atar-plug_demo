@@ -13,18 +13,17 @@ import com.atar.host.app.activity.proxy.ProxyActivity;
 import com.atar.host.app.activity.web.DynamicWebviewActivity;
 import com.atar.host.app.adapter.HostMenuAdapter;
 import com.atar.host.app.beans.MenuItemBean;
-import com.atar.host.app.contans.Config;
+import com.atar.host.app.configs.Config;
 import com.atar.host.app.presenter.TestPresenter;
-import com.atar.host.app.utils.AppConfigUtils;
+import com.atar.host.app.configs.AppConfigUtils;
 import com.atar.host.app.viewmodels.TestViewModel;
 import com.common.business.code.utils.IntentUtil;
-import com.common.framework.application.AppConfigModel;
+import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.download.DownLoadFileManager;
 import com.common.framework.interfaces.HandlerListener;
 import com.common.framework.utils.ShowLog;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,11 +73,16 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
         recyclerview = findViewById(R.id.recyclerview);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+
         list.add(new MenuItemBean(0, "到插件内"));
         list.add(new MenuItemBean(1, "BridgeWebView 加载 在线html 离线js 样式 图片"));
         list.add(new MenuItemBean(2, "WebView 加载 在线 html"));
         list.add(new MenuItemBean(3, "下载插件"));
         list.add(new MenuItemBean(5, "设置服务器ip地址"));
+        list.add(new MenuItemBean(6, "设置"));
+
         recyclerview.setAdapter(mHostMenuAdapter);
         mHostMenuAdapter.setListener(this);
 
@@ -97,6 +101,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
             case 0:
                 setIP();
                 String className = "com.app.sub.activity.MainActivity";
+//                IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, ProxyActivity.class));
                 ProxyActivity.startProxyActivity(Main2Activity.this, className, apk_sdk_path);
                 break;
             case 1:
@@ -113,6 +118,9 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
                 break;
             case 5:
                 IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, SetHostIPAddressActivity.class));
+                break;
+            case 6:
+                IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, SettingActivity.class));
                 break;
         }
     }

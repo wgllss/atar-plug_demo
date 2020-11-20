@@ -1,17 +1,23 @@
 /**
  *
  */
-package com.atar.host.app.utils;
+package com.atar.host.app.configs;
 
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 
+import com.atar.host.app.BuildConfig;
+import com.atar.host.app.services.DownLoadSevice;
 import com.common.framework.Threadpool.ThreadPoolTool;
-import com.common.framework.application.AppConfigModel;
+import com.common.framework.appconfig.AppConfigDownloadManager;
+import com.common.framework.appconfig.AppConfigModel;
+import com.common.framework.skin.SkinResourcesManager;
 import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
+import com.google.gson.Gson;
 
 import static com.atar.host.app.activity.web.OffineImplWebViewClient.HOST_OFFINE_FILE_PATH_KEY;
-import static com.atar.host.app.activity.web.OffineImplWebViewClient.OFFINE_FILE_PATH_KEY;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -25,28 +31,6 @@ import static com.atar.host.app.activity.web.OffineImplWebViewClient.OFFINE_FILE
  */
 public class AppConfigUtils {
     private static String TAG = AppConfigUtils.class.getSimpleName();
-
-//    /**
-//     * 下载配置androidAppConfig地址key
-//     */
-//    public static final String andriod_app_config_url = UrlParamCommon.CONFIG_HOST +
-//            "androidAppConfig.txt";
-//    /**
-//     * 保存配置文件json key
-//     */
-//    public static final String ANDRIOD_APP_CONFIG_KEY = "ANDRIOD_APP_CONFIG_KEY";
-//    /**
-//     * 保存开机引道json key
-//     */
-//    public static final String APP_LOADING_IMAGES_KEY = "APP_LOADING_IMAGES_KEY";
-//    /**
-//     * 保存webview 已有离线文件 key
-//     */
-//    public static final String OFFINE_FILE_PATH_KEY = "OFFINE_FILE_PATH_KEY";
-//    /**
-//     * 保存andriodAppConfig.txt文件版本 key
-//     */
-//    public static final String APP_CONFIG_TEXT_VERSION_KEY = "APP_CONFIG_TEXT_VERSION_KEY";
 
     /**
      * 获取离线assets下webview 所用文件
@@ -99,93 +83,72 @@ public class AppConfigUtils {
         });
     }
 
-//    /**
-//     * 读取服务端文件 如txt中的json
-//     *
-//     * @param FileUrl                    :文件地址
-//     * @param saveToSharedPreferencesKey :需要保存到SharedPreferences中的Key
-//     * @author :Atar
-//     * @createTime:2017-5-24上午11:15:57
-//     * @version:1.0.0
-//     * @modifyTime:
-//     * @modifyAuthor:
-//     * @description:
-//     */
-//    public static void getServerTextJson(final String FileUrl, final String
-//            saveToSharedPreferencesKey, final HandlerListener handlerListener, final int
-//                                                 resultMsgWhat) {
-//        AppConfigDownloadManager.getInstance().getServerJson(FileUrl, new HttpCallBackResult() {
-//            @Override
-//            public void onResult(String result) {
-//                if (result != null && saveToSharedPreferencesKey != null && result.length() > 0) {
-//                    Gson gson = new Gson();
-//                    AppConfigJson mAppConfigJson = null;
-//                    try {
-//                        mAppConfigJson = gson.fromJson(result, AppConfigJson.class);
-//                    } catch (Exception e) {
-//                        CrashHandler.getInstance().CrashException(e, CrashHandler.CRASHT_YPE_CATCH);
-//                        ShowLog.e(TAG, e);
-//                    }
-//                    if (mAppConfigJson == null) {
-//                        return;
-//                    }
-//                    String versionName = "";
-//                    String localVersion = "";
-//                    if (AppConfigModel.getInstance().getString(AppConfigModel.VERSION_KEY, "") !=
-//                            null && AppConfigModel.getInstance().getString(AppConfigModel
-//                            .VERSION_KEY, "").length() > 0) {
-//                        localVersion = AppConfigModel.getInstance().getString(AppConfigModel
-//                                .VERSION_KEY, "");
-//                    } else {
-//                        try {
-//                            localVersion = ApplicationManagement.getVersionName();
-//                        } catch (Exception e) {
-//                            CrashHandler.getInstance().CrashException(e, CrashHandler.CRASHT_YPE_CATCH);
-//                            ShowLog.e(TAG, e);
-//                        }
-//                    }
-//                    boolean isReplace = true;
-//                    // versionName 版本号 和apk 的versionName一样的值
-//                    // isReplace 如果apk新发版本 这个配置也新发配置.txt文件，为true: 老版本要替换该配置.txt, false :老版本不替换该.txt
-//                    versionName = mAppConfigJson.getVersionName();
-//                    AppConfigModel.getInstance().putString(APP_CONFIG_TEXT_VERSION_KEY,
-//                            versionName, true);
-//
-//                    isReplace = mAppConfigJson.isReplace();
-//                    if (versionName.compareToIgnoreCase(localVersion) > 0) {
-//                        if (isReplace) {
-//                            AppConfigModel.getInstance().putString(saveToSharedPreferencesKey,
-//                                    result, true);
-//                            AppConfigModel.getInstance().putString(LoadingActivity
-//                                            .LOADIMAGE_VERSION_KEY, mAppConfigJson
-//                                            .getLoadImage_Version()
-//                                    , true);
-//                        }
-//                    } else {
-//                        AppConfigModel.getInstance().putString(saveToSharedPreferencesKey,
-//                                result, true);
-//                    }
-//                    try {
-//                        if (AppConfigSetting.getInstance().getLoginUserName() != null && AppConfigSetting.getInstance().getLoginUserName().length() > 0) {
-//                            AppConfigModel.getInstance().putBoolean(CrashHandler.DEBUGID_KEY, mAppConfigJson.getMobiles().contains(AppConfigSetting.getInstance().getLoginUserName()), true);
-//                        }
-//                    } catch (Exception e) {
-//
-//                    }
-//                    if (mAppConfigJson.getLoading_images() != null && mAppConfigJson
-//                            .getLoading_images().size() > 0 && handlerListener != null) {
-//                        AppConfigModel.getInstance().putString(APP_LOADING_IMAGES_KEY, gson
-//                                .toJson(mAppConfigJson.getLoading_images()), true);
-//                        CommonHandler.getInstatnce().handerMessage(handlerListener,
-//                                resultMsgWhat, 0, 0, mAppConfigJson.getLoading_images());
-//                    }
-//                    // 处理下载皮肤
-//                    CommonHandler.getInstatnce().handerMessage(handlerListener, resultMsgWhat, 1,
-//                            0, mAppConfigJson);
-//                }
-//            }
-//        });
-//    }
+    /**
+     * 读取服务端文件 如txt中的json
+     *
+     * @param FileUrl :文件地址
+     * @author :Atar
+     * @createTime:2017-5-24上午11:15:57
+     * @version:1.0.0
+     * @modifyTime:
+     * @modifyAuthor:
+     * @description:
+     */
+    public static void getServerTextJson(Context context, final String FileUrl) {
+        AppConfigDownloadManager.getInstance().getServerJson(FileUrl, new AppConfigDownloadManager.HttpCallBackResult() {
+            @Override
+            public void onResult(String result) {
+                if (result != null) {
+                    Gson gson = new Gson();
+                    AppConfigJson mAppConfigJson = null;
+                    try {
+                        mAppConfigJson = gson.fromJson(result, AppConfigJson.class);
+                    } catch (Exception e) {
+                        ShowLog.e(TAG, e);
+                    }
+                    if (mAppConfigJson == null) {
+                        return;
+                    }
+                    String versionName = mAppConfigJson.getConfigVersionName();
+                    String localVersion = BuildConfig.VERSION_NAME;
+
+                    //处理配置文件版本内容
+                    if (versionName.compareToIgnoreCase(localVersion) > 0) {
+                        //线上配置文件版本比宿主apk版本大
+                        String configFileContentVersionName = AppConfigModel.getInstance().getString(Config.SAVE_CONFIG_FILE_VERSION_KEY, BuildConfig.VERSION_NAME);
+                        if (versionName.compareToIgnoreCase(configFileContentVersionName) > 0) {
+                            //线上配置文件内容版本比本地该版本大
+                            AppConfigModel.getInstance().putString(Config.SAVE_CONFIG_FILE_VERSION_KEY, mAppConfigJson.getConfigVersionName(), true);
+                            AppConfigModel.getInstance().putString(Config.SAVE_CONFIG_FILE_CONTENT_KEY, result, true);
+                        } else {
+                            //本地已经存在
+                            ZzLog.e("本地已经存在 该内容");
+                        }
+                    } else {
+                        AppConfigModel.getInstance().putString(Config.SAVE_CONFIG_FILE_VERSION_KEY, mAppConfigJson.getConfigVersionName(), true);
+                        AppConfigModel.getInstance().putString(Config.SAVE_CONFIG_FILE_CONTENT_KEY, result, true);
+                    }
+
+                    //处理引导图
+                    if (mAppConfigJson.getGuideImageConfigJson() != null && !TextUtils.isEmpty(mAppConfigJson.getGuideImageConfigJson().getGuideImageVersion())) {
+                        String localGuideImageVersion = AppConfigModel.getInstance().getString(Config.SAVE_LOAD_IMAGE_VERSION_KEY, BuildConfig.VERSION_NAME);
+                        if (mAppConfigJson.getGuideImageConfigJson().getGuideImageVersion().compareToIgnoreCase(localGuideImageVersion) > 0) {
+                            AppConfigModel.getInstance().putString(Config.SAVE_LOAD_IMAGE_CONTENT_KEY, gson.toJson(mAppConfigJson.getGuideImageConfigJson().getList()), true);
+                            AppConfigModel.getInstance().putString(Config.SAVE_LOAD_IMAGE_VERSION_KEY, mAppConfigJson.getGuideImageConfigJson().getGuideImageVersion(), true);
+                            //下载引导图 供下次使用
+                            DownLoadSevice.startDownloadGuideImage(context, gson.toJson(mAppConfigJson.getGuideImageConfigJson().getList()));
+                        }
+                    }
+
+                    //处理皮肤
+                    if (mAppConfigJson.getSkinconfigJson() != null && !TextUtils.isEmpty(mAppConfigJson.getSkinconfigJson().getSkinVersionName())) {
+                        //下载皮肤 供下次使用
+                        SkinResourcesManager.getInstance(context).downLoadSkin(null, mAppConfigJson.getSkinconfigJson().getSkinVersionName(), mAppConfigJson.getSkinconfigJson().getSkinReplaceMinVersion());
+                    }
+                }
+            }
+        });
+    }
 
 //    /**
 //     * @author :Atar

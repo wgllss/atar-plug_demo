@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="70dp"
+        android:visibility="gone"
+        android:layout_marginRight="30dp"
+        android:background="@color/transparent3"
+        android:gravity="center"
+        android:text="3s后跳转"
+        android:textColor="@color/white" />
+</FrameLayout>
