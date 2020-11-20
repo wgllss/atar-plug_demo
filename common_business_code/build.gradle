@@ -29,7 +29,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':common_code')
     compile project(':common_resource')
-    compile project(':app_skin_blue')
+//    compile project(':app_skin_blue')
 //    compile 'android.arch.lifecycle:extensions:1.1.1'
 
     compileOnly 'androidx.multidex:multidex:2.0.0'

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!--<color name="colorPrimary">#008577</color>-->
+    <!--<color name="colorPrimaryDark">#00574B</color>-->
+    <!--<color name="colorAccent">#D81B60</color>-->
     <!-- ————————————————————————————————————2014.08.19 更改颜色 白天模式 start———————————————————————————————————— -->
     <color name="common_top_title_bar_bg_day">#1191f6</color>
     <color name="common_top_title_bar_bg_night">#005e91</color>

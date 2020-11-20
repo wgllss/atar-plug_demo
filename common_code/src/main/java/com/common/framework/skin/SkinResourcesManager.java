@@ -43,7 +43,7 @@ public class SkinResourcesManager {
     /**
      * 是否加载apk资源 false加载library下资源
      */
-    public static boolean isLoadApkSkin = true;
+    public static boolean isLoadApkSkin = false;
 
     private String download_skin_Url = "";
     /**
