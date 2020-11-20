@@ -16,7 +16,6 @@ import android.view.WindowManager;
 
 import com.common.framework.interfaces.OnOpenDrawerCompleteListener;
 import com.common.framework.interfaces.PluginInterface;
-import com.common.framework.utils.ZzLog;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -384,9 +383,9 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
     @Override
     public void onAttachedToWindow() {
         if (isPlugin) {
-            thisContext.onDetachedFromWindow();
+            thisContext.onAttachedToWindow();
         } else {
-            super.onDetachedFromWindow();
+            super.onAttachedToWindow();
         }
     }
 

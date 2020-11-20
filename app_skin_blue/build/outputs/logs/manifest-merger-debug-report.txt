@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+	package
+		ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:2:5-28
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:1-2:31
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml:1:11-69
+uses-sdk
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		ADDED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
+		INJECTED from D:\20181203\software\atar-plug_demo\app_skin_blue\src\main\AndroidManifest.xml
