@@ -86,7 +86,7 @@ public class DownLoadFileManager {
                             }
                             mDownLoadFile.downLoad(activity, handlerListener, which, fileUrl, fileThreadNum, strDownloadFileName, strDownloadDir);
                         } catch (Exception e) {
-                            ZzLog.e(TAG, "downLoad-->" + e);
+                            ZzLog.e(TAG, e);
                         }
                     }
                 });

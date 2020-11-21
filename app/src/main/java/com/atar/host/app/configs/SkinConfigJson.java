@@ -8,6 +8,7 @@ import java.util.List;
  * @description:
  */
 public class SkinConfigJson {
+    private boolean isLoadApkSkin;//是否应用加载外部apk
     private String skinVersionName;//皮肤版本
     private String skinReplaceMinVersion;//皮肤需要强制替换的最小版本 (小于该版本下必须强制下载新的，不含等于)
     private List<SkinBean> all_skin;
@@ -24,4 +25,7 @@ public class SkinConfigJson {
         return all_skin;
     }
 
+    public boolean isLoadApkSkin() {
+        return isLoadApkSkin;
+    }
 }

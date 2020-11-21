@@ -22,8 +22,6 @@ public class Config {
     public static final String SAVE_LOAD_IMAGE_VERSION_KEY = "SAVE_LOAD_IMAGE_VERSION_KEY";
     //保存引导图内容
     public static final String SAVE_LOAD_IMAGE_CONTENT_KEY = "SAVE_LOAD_IMAGE_CONTENT_KEY";
-    //保存皮肤版本KEY
-    public static final String SAVE_SKIN_VERSION_NAME_KEY = "SAVE_SKIN_VERSION_NAME_KEY";
     //报损插件版本KEY
     public static final String SAVAE_PLUGIN_VERSION_NAME_KEY = "SAVAE_PLUGIN_VERSION_NAME_KEY";
 

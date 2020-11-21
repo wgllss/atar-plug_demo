@@ -55,7 +55,13 @@ public abstract class CommonActivity extends AppCompatActivity implements OnOpen
     @Override
     protected void onStart() {
         super.onStart();
-        loadSkin(getCurrentSkinType());
+        if (isloadSkin()) {
+            loadSkin(getCurrentSkinType());
+        }
+    }
+
+    protected boolean isloadSkin() {
+        return true;
     }
 
     /**

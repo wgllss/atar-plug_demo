@@ -12,14 +12,18 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.common.framework.Threadpool.ThreadPoolTool;
 import com.common.framework.appconfig.AppConfigDownloadManager;
+import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.interfaces.HandlerListener;
 import com.common.framework.utils.FileUtils;
 import com.common.framework.utils.MDPassword;
 import com.common.framework.utils.ShowLog;
+import com.common.framework.utils.ZzLog;
+import com.zz.common.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,10 +44,17 @@ import java.lang.reflect.Method;
 public class SkinResourcesManager {
     private String TAG = SkinResourcesManager.class.getSimpleName();
 
+    //存放服务端返回是否加载外部apk 皮肤资源
+    private static final String IS_LOAD_APK_SKIN_KEY = "IS_LOAD_APK_SKIN_KEY";
+    //保存下载皮肤版本
+    private static final String DOWN_LOAD_SKIN_VERSION_NAME_KEY = "DOWN_LOAD_SKIN_VERSION_NAME_KEY";
+
     /**
      * 是否加载apk资源 false加载library下资源
      */
-    public static boolean isLoadApkSkin = false;
+    public static boolean isLoadApkSkin = AppConfigModel.getInstance().getBoolean(IS_LOAD_APK_SKIN_KEY, false);
+    //当前加载皮肤版本
+    private String downLoadVersionName = AppConfigModel.getInstance().getString(DOWN_LOAD_SKIN_VERSION_NAME_KEY, "");
 
     private String download_skin_Url = "";
     /**
@@ -54,14 +65,14 @@ public class SkinResourcesManager {
      * 皮肤工程包名
      */
     private String skin_project_packname = "";
-    /**
-     * assets根目录下资源文件 默认皮肤资源
-     */
-    private String DEFAULT_ASSETS_SKIN_NAME = "skin.so";
+//    /**
+//     * assets根目录下资源文件 默认皮肤资源
+//     */
+//    private String DEFAULT_ASSETS_SKIN_NAME = "skin.so";
     /**
      * SD卡目录 下载 资源文件 皮肤资源
      */
-    private String SD_PATH = Environment.getExternalStorageDirectory() + "/.Android/.cache/.";
+    private String SD_PATH = Environment.getExternalStorageDirectory() + "/.android/.cache/.skin/";
     /**
      * sd下默认皮肤资源
      */
@@ -70,6 +81,8 @@ public class SkinResourcesManager {
      * sd下载皮肤资源
      */
     private String DOWNLOAD_SD_SKIN_NAME = "download_skin";
+    private String current_version = "1.0.00";
+    private String default_skin_version_name = "1.0.00";
 
     private static SkinResourcesManager mInstance;
     private Context mContext;
@@ -80,9 +93,13 @@ public class SkinResourcesManager {
             mInstance = new SkinResourcesManager();
             mInstance.mContext = mContext;
             mInstance.main_project_packname = mContext.getPackageName();
-            // mInstance.SD_PATH = mContext.getCacheDir() + "/";
-            mInstance.SD_PATH = mInstance.SD_PATH + MDPassword.getPassword32(mInstance.main_project_packname) + "/";
-            //ShowLog.i(mInstance.TAG, " mInstance.SD_PATH -->" + mInstance.SD_PATH);
+            String exPath = mInstance.main_project_packname;
+            if (!BuildConfig.DEBUG) {
+                exPath = MDPassword.getPassword32(mInstance.main_project_packname);
+                mInstance.DOWNLOAD_SD_SKIN_NAME = MDPassword.getPassword32(mInstance.DOWNLOAD_SD_SKIN_NAME);
+                mInstance.DEFAULT_SD_SKIN_NAME = MDPassword.getPassword32(mInstance.DEFAULT_SD_SKIN_NAME);
+            }
+            mInstance.SD_PATH = mInstance.SD_PATH + exPath + "/";
         }
         return mInstance;
     }
@@ -90,7 +107,6 @@ public class SkinResourcesManager {
     /**
      * 初始化皮肤资源
      *
-     * @param isDownLoadApkSkin     是否加载apk资源皮肤
      * @param skin_project_packname 皮肤工程包名
      * @param download_skin_Url     下载皮肤url
      * @author :Atar
@@ -100,67 +116,50 @@ public class SkinResourcesManager {
      * @modifyAuthor:
      * @description:
      */
-    public void initSkinResources(boolean isDownLoadApkSkin, String skin_project_packname, final String download_skin_Url) {
-        isLoadApkSkin = isDownLoadApkSkin;
+    public void initSkinResources(String skin_project_packname, String default_skin_version_name, final String download_skin_Url) {
         this.skin_project_packname = skin_project_packname;
+        this.default_skin_version_name = default_skin_version_name;
+        this.download_skin_Url = download_skin_Url;
         if (isLoadApkSkin) {
-            this.download_skin_Url = download_skin_Url;
             ThreadPoolTool.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        File file = new File(SD_PATH);
+                        current_version = downLoadVersionName;
+                        ZzLog.e("current_version:" + current_version);
+                        if (TextUtils.isEmpty(current_version)) {
+                            //当前版本 本地没有
+                            isLoadApkSkin = false;
+                            loadDefaultSkin();
+                            return;
+                        }
+                        File file = new File(SD_PATH + current_version + "/");
                         if (!FileUtils.exists(SD_PATH)) {
                             FileUtils.createDir(SD_PATH);
                         }
-                        final File downloadFile = new File(file.getAbsolutePath(), MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME));
+                        final File downloadFile = new File(file.getAbsolutePath(), DOWNLOAD_SD_SKIN_NAME);
                         if (downloadFile.exists()) {// 存在下载皮肤文件
                             loadSkinResources(downloadFile.getAbsolutePath(), null);
                             return;
                         }
-                        File defaultFile = new File(file.getAbsolutePath(), MDPassword.getPassword32(DEFAULT_SD_SKIN_NAME));
-                        if (!defaultFile.exists()) {
-                            copyfileFromAssetsToSD(mContext);
-                        }
-                        loadSkinResources(defaultFile.getAbsolutePath(), null);
+                        loadDefaultSkin();
                     } catch (Exception e) {
+                        isLoadApkSkin = false;
+                        loadDefaultSkin();
+                        e.printStackTrace();
                     }
                 }
             });
         }
     }
 
-    /**
-     * 从assets中复制apk到sd中
-     *
-     * @param context
-     * @return
-     * @author :Atar
-     * @createTime:2017-9-18上午10:01:43
-     * @version:1.0.0
-     * @modifyTime:
-     * @modifyAuthor:
-     * @description:
-     */
-    private boolean copyfileFromAssetsToSD(Context context) {
-        boolean copyIsFinish = false;
+    //加载默认皮肤
+    private void loadDefaultSkin() {
         try {
-            InputStream is = context.getAssets().open(DEFAULT_ASSETS_SKIN_NAME);
-            File file = new File(SD_PATH + MDPassword.getPassword32(DEFAULT_SD_SKIN_NAME));
-            file.createNewFile();
-            FileOutputStream fos = new FileOutputStream(file);
-            byte[] temp = new byte[1024];
-            int i = 0;
-            while ((i = is.read(temp)) > 0) {
-                fos.write(temp, 0, i); // 写入到文件
-            }
-            fos.close();
-            is.close();
-            copyIsFinish = true;
+            mResources = mContext.getResources();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return copyIsFinish;
     }
 
     /**
@@ -188,17 +187,13 @@ public class SkinResourcesManager {
                 mResources = packageManager.getResourcesForApplication(applicationInfo);
             } catch (PackageManager.NameNotFoundException e) {
             }
-
-//            AssetManager assetManager = AssetManager.class.newInstance();
-//            Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
-//            addAssetPath.invoke(assetManager, skinFilePath);
-//            Resources superRes = mContext.getResources();
-//            mResources = new Resources(assetManager, superRes.getDisplayMetrics(), superRes.getConfiguration());
             if (callback != null) {
                 callback.loadSkinSuccess(mResources);
             }
             ShowLog.i(TAG, "皮肤加载成功");
         } catch (Exception e) {
+            isLoadApkSkin = false;
+            loadDefaultSkin();
             e.printStackTrace();
         }
     }
@@ -219,23 +214,30 @@ public class SkinResourcesManager {
             ThreadPoolTool.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
-                    String newest_path = SD_PATH + MDPassword.getPassword32(DEFAULT_SD_SKIN_NAME);
-                    File file = new File(SD_PATH);
-                    if (!FileUtils.exists(SD_PATH)) {
-                        FileUtils.createDir(SD_PATH);
-                    }
-                    File downloadFile = new File(file.getAbsolutePath(), MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME));
-                    if (downloadFile.exists()) {// 存在下载皮肤文件
-                        newest_path = downloadFile.getAbsolutePath();
-                    } else {
-                        File defaultFile = new File(file.getAbsolutePath(), MDPassword.getPassword32(DEFAULT_SD_SKIN_NAME));
-                        if (defaultFile.exists()) {
-                            newest_path = defaultFile.getAbsolutePath();
-                        } else {
+                    try {
+                        current_version = downLoadVersionName;
+                        ZzLog.e("current_version:" + current_version);
+                        if (TextUtils.isEmpty(current_version)) {
+                            //当前版本 本地没有
+                            isLoadApkSkin = false;
+                            loadDefaultSkin();
                             return;
                         }
+                        File file = new File(SD_PATH + current_version + "/");
+                        if (!FileUtils.exists(SD_PATH)) {
+                            FileUtils.createDir(SD_PATH);
+                        }
+                        final File downloadFile = new File(file.getAbsolutePath(), DOWNLOAD_SD_SKIN_NAME);
+                        if (downloadFile.exists()) {// 存在下载皮肤文件
+                            loadSkinResources(downloadFile.getAbsolutePath(), null);
+                            return;
+                        }
+                        loadDefaultSkin();
+                    } catch (Exception e) {
+                        isLoadApkSkin = false;
+                        loadDefaultSkin();
+                        e.printStackTrace();
                     }
-                    loadSkinResources(newest_path, callback);
                 }
             });
         }
@@ -254,39 +256,19 @@ public class SkinResourcesManager {
      * @modifyAuthor:
      * @description:
      */
-    public void downLoadSkin(Activity activity, final String newVersion, String replaceMinVersion) {
+    public void downLoadSkin(Activity activity, boolean isLoadApkSkin, final String newVersion, String replaceMinVersion) {
+        AppConfigModel.getInstance().putBoolean(IS_LOAD_APK_SKIN_KEY, isLoadApkSkin, true);
         if (isLoadApkSkin) {
-            AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, handlerListener, newVersion, replaceMinVersion, 0, download_skin_Url, 0, true,
-                    MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME) + "0", SD_PATH);
+            AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, new SkinHandlerListener(newVersion, isLoadApkSkin), newVersion, replaceMinVersion, 0, download_skin_Url, 0, true,
+                    DOWNLOAD_SD_SKIN_NAME, SD_PATH + current_version + "/");
         }
     }
-
-    HandlerListener handlerListener = new HandlerListener() {
-        @Override
-        public void onHandlerData(Message msg) {
-            switch (msg.what) {
-                case DownLoadFileBean.DOWLOAD_FLAG_FAIL:
-                    ShowLog.i(TAG, "皮肤下载失败");
-                    break;
-                case DownLoadFileBean.DOWLOAD_FLAG_SUCCESS:
-                    ShowLog.i(TAG, "皮肤下载成功");
-                    final File oldDownloadFile = new File(SD_PATH + MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME));
-                    oldDownloadFile.deleteOnExit();
-                    FileUtils.copyFile(SD_PATH + MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME) + "0", SD_PATH + MDPassword.getPassword32(DOWNLOAD_SD_SKIN_NAME));
-                    ShowLog.i(TAG, "皮肤文件替换成功");
-                    break;
-                case DownLoadFileBean.DOWLOAD_FLAG_ING:
-                    ShowLog.i(TAG, "皮肤正在下载:" + msg.arg2 + "%");
-                    break;
-            }
-        }
-    };
 
     public Resources getResources() {
         if (isLoadApkSkin) {
             return mResources;
         } else {
-            return mContext.getResources();
+            return mResources != null ? mResources : mContext.getResources();
         }
     }
 
@@ -296,5 +278,33 @@ public class SkinResourcesManager {
 
     public interface loadSkinCallBack {
         void loadSkinSuccess(Resources mResources);
+    }
+
+    //皮肤下再回调
+    public class SkinHandlerListener implements HandlerListener {
+        //最新版本 皮肤
+        private String newVersion;
+        private boolean isLoadApkSkin;
+
+        public SkinHandlerListener(String newVersion, boolean isLoadApkSkin) {
+            this.newVersion = newVersion;
+            this.isLoadApkSkin = isLoadApkSkin;
+        }
+
+        @Override
+        public void onHandlerData(Message msg) {
+            switch (msg.what) {
+                case DownLoadFileBean.DOWLOAD_FLAG_FAIL:
+                    ShowLog.i(TAG, "皮肤下载失败");
+                    break;
+                case DownLoadFileBean.DOWLOAD_FLAG_SUCCESS:
+                    ShowLog.i(TAG, "皮肤下载成功");
+                    AppConfigModel.getInstance().putString(DOWN_LOAD_SKIN_VERSION_NAME_KEY, newVersion, true);
+                    break;
+                case DownLoadFileBean.DOWLOAD_FLAG_ING:
+                    ShowLog.i(TAG, "皮肤正在下载:" + msg.arg2 + "%");
+                    break;
+            }
+        }
     }
 }

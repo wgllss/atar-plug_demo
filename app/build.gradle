@@ -74,7 +74,7 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':common_business_code')
-//    implementation project(':app_skin_blue')
+    implementation project(':app_skin_blue')
 
     compile project(':Jsbridgelibrary')
 //    implementation(name: 'swithc-button8-release', ext: 'aar')

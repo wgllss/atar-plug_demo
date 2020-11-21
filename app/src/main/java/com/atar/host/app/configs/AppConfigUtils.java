@@ -143,7 +143,7 @@ public class AppConfigUtils {
                     //处理皮肤
                     if (mAppConfigJson.getSkinconfigJson() != null && !TextUtils.isEmpty(mAppConfigJson.getSkinconfigJson().getSkinVersionName())) {
                         //下载皮肤 供下次使用
-                        SkinResourcesManager.getInstance(context).downLoadSkin(null, mAppConfigJson.getSkinconfigJson().getSkinVersionName(), mAppConfigJson.getSkinconfigJson().getSkinReplaceMinVersion());
+                        SkinResourcesManager.getInstance(context).downLoadSkin(null, mAppConfigJson.getSkinconfigJson().isLoadApkSkin(), mAppConfigJson.getSkinconfigJson().getSkinVersionName(), mAppConfigJson.getSkinconfigJson().getSkinReplaceMinVersion());
                     }
                 }
             }

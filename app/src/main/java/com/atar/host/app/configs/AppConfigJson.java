@@ -26,4 +26,5 @@ public class AppConfigJson {
     public GuideImageConfigJson getGuideImageConfigJson() {
         return guideImageConfigJson;
     }
+
 }

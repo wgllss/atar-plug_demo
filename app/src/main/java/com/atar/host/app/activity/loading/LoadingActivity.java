@@ -1,6 +1,7 @@
 package com.atar.host.app.activity.loading;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,12 +11,16 @@ import com.atar.host.app.BuildConfig;
 import com.atar.host.app.R;
 import com.atar.host.app.activity.Main2Activity;
 import com.atar.host.app.adapter.PagerAdAdapter;
+import com.atar.host.app.aplication.AtarApplication;
 import com.atar.host.app.configs.AppConfigUtils;
 import com.atar.host.app.configs.Config;
+import com.atar.host.app.services.DownLoadSevice;
 import com.common.business.code.activity.BaseActivity;
 import com.common.business.code.utils.IntentUtil;
 import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.interfaces.TimerListener;
+import com.common.framework.skin.SkinResourcesManager;
+import com.common.framework.utils.ServiceUtil;
 import com.common.framework.utils.TimerUtils;
 import com.common.framework.utils.ZzLog;
 import com.google.gson.Gson;
@@ -34,9 +39,14 @@ public class LoadingActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AppConfigUtils.getOffineFilePath(getAssets());
         AppConfigUtils.getServerTextJson(this, Config.config_file_url);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected boolean isloadSkin() {
+        return false;
     }
 
     @Override

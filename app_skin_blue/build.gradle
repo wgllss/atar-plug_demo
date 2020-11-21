@@ -1,6 +1,6 @@
-apply plugin: 'com.android.application'
-//apply plugin: 'com.android.library'
-
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
 //单独皮肤包 包含颜色 drawable 图片
 
 android {
@@ -8,7 +8,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.atar.skin"
+//        applicationId "com.atar.skin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1000
