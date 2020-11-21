@@ -259,7 +259,7 @@ public class SkinResourcesManager {
     public void downLoadSkin(Activity activity, boolean isLoadApkSkin, final String newVersion, String replaceMinVersion) {
         AppConfigModel.getInstance().putBoolean(IS_LOAD_APK_SKIN_KEY, isLoadApkSkin, true);
         if (isLoadApkSkin) {
-            AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, new SkinHandlerListener(newVersion, isLoadApkSkin), newVersion, replaceMinVersion, 0, download_skin_Url, 0, true,
+            AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, new SkinHandlerListener(newVersion, isLoadApkSkin), newVersion, replaceMinVersion, 0, download_skin_Url, 1, true,
                     DOWNLOAD_SD_SKIN_NAME, SD_PATH + current_version + "/");
         }
     }
