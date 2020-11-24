@@ -39,6 +39,12 @@ public class LoadingActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        String current_confing_content = AppConfigModel.getInstance().getString(Config.SAVE_CONFIG_FILE_CONTENT_KEY, AppConfigUtils.getDefaultSetting());
+        String default_confing_content = AppConfigUtils.getDefaultSetting();
+        SkinResourcesManager.getInstance(this)
+                .setCurrent_confing_content(current_confing_content)
+                .setDefault_confing_content(default_confing_content);
+
         AppConfigUtils.getOffineFilePath(getAssets());
         AppConfigUtils.getServerTextJson(this, Config.config_file_url);
         super.onCreate(savedInstanceState);

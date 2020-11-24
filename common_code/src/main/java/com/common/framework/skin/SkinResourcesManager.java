@@ -79,10 +79,27 @@ public class SkinResourcesManager {
     private String DOWNLOAD_SD_SKIN_NAME = "download_skin";
     private String current_version = "1.0.00";
     private String default_skin_version_name = "1.0.00";
+    private String current_confing_content;
+    private String default_confing_content;
+
 
     private static SkinResourcesManager mInstance;
     private Context mContext;
     private Resources mResources;
+
+    public String getCurrent_confing_content() {
+        return current_confing_content;
+    }
+
+    public SkinResourcesManager setCurrent_confing_content(String current_confing_content) {
+        this.current_confing_content = current_confing_content;
+        return this;
+    }
+
+    public SkinResourcesManager setDefault_confing_content(String default_confing_content) {
+        this.default_confing_content = default_confing_content;
+        return this;
+    }
 
     public static SkinResourcesManager getInstance(Context mContext) {
         if (mInstance == null) {
@@ -151,6 +168,7 @@ public class SkinResourcesManager {
     private void loadDefaultSkin() {
         try {
             isLoadApkSkin = false;
+            current_confing_content = default_confing_content;
             mResources = mContext.getResources();
         } catch (Exception e) {
             e.printStackTrace();

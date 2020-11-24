@@ -11,6 +11,7 @@ public class SkinBean {
     private String skinLoadName;//皮肤显示名称
     private String skinColor;//皮肤颜色
     private String skinDownLoadName;//下载到本地皮肤文件名称
+    private int skinType; //比如 0 :白天 1:晚上 2 :红色 3:绿色等等
 
     public String getSkinDownloadUrl() {
         return skinDownloadUrl;
@@ -30,5 +31,9 @@ public class SkinBean {
 
     public String getSkinDownLoadName() {
         return skinDownLoadName;
+    }
+
+    public int getSkinType() {
+        return skinType;
     }
 }

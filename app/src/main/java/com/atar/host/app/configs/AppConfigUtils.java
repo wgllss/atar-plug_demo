@@ -365,31 +365,64 @@ public class AppConfigUtils {
 //        }
 //    }
 //
-//    /**
-//     * 得到默认配置数据
-//     *
-//     * @return
-//     * @author :Atar
-//     * @createTime:2017-5-24下午1:28:35
-//     * @version:1.0.0
-//     * @modifyTime:
-//     * @modifyAuthor:
-//     * @description:
-//     */
-//    public static String getDefaultSetting() {
-//        return "{\"versionName\":\"2.91\",\"isReplace\":true,\"skinVersion\":\"3.00\",\"main_tab_json\":[{\"ID\":10000,\"menuName\":\"首页\",\"menuNameColor\":\"#ffffff,#ffffff\"," +
-//                "\"menuNameSelcetColor\":\"#ffffff,#ffffff\",\"menuNameTextSize\":12,\"menuNameMarginTop\":5,\"itemBgColor\":\"#212423,#212423\",\"itemBgSelectColor\":\"#D53533,#D53533\"," +
-//                "\"isShowIcon\":true,\"menuIcon\":\"assets://images/icon_tab_home_nor.png\",\"selectMenuIcon\":\"assets://images/icon_tab_home_pre.png\",\"menuIconWidthAndHeight\":20," +
-//                "\"orientation\":1,\"onClickInfo\":{\"className\":\"com.cjml.app.ui.activitys.main.HomeActivity\"}},{\"ID\":10001,\"menuName\":\"订单记录\",\"menuNameColor\":\"#ffffff,#ffffff\"," +
-//                "\"menuNameSelcetColor\":\"#ffffff,#ffffff\",\"menuNameTextSize\":12,\"menuNameMarginTop\":5,\"itemBgColor\":\"#212423,#212423\",\"itemBgSelectColor\":\"#D53533,#D53533\"," +
-//                "\"isShowIcon\":true,\"menuIcon\":\"assets://images/icon_tab_order.png\",\"selectMenuIcon\":\"assets://images/icon_tab_order.png\",\"menuIconWidthAndHeight\":20,\"orientation\":1," +
-//                "\"isShowinfoNumRedBg\":true,\"infoNum\":0,\"infoNumColor\":\"#ffffff\",\"infoNumSize\":15,\"infoNumMarginLeft\":14,\"infoNumMarginTop\":8,\"onClickInfo\":{\"className\":\"com" +
-//                ".cjml.app.ui.activitys.main.OrderHistoryActivity\"}},{\"ID\":10002,\"menuName\":\"扫描记录\",\"menuNameColor\":\"#ffffff,#ffffff\",\"menuNameSelcetColor\":\"#ffffff,#ffffff\"," +
-//                "\"menuNameTextSize\":12,\"menuNameMarginTop\":5,\"itemBgColor\":\"#212423,#212423\",\"itemBgSelectColor\":\"#D53533,#D53533\",\"isShowIcon\":true," +
-//                "\"menuIcon\":\"assets://images/icon_tab_scan.png\",\"selectMenuIcon\":\"assets://images/icon_tab_scan.png\",\"menuIconWidthAndHeight\":20,\"orientation\":1," +
-//                "\"onClickInfo\":{\"className\":\"com.cjml.app.ui.activitys.main.ScanHistoryActivity\"}},{\"ID\":10002,\"menuName\":\"我的\",\"menuNameColor\":\"#ffffff,#ffffff\"," +
-//                "\"menuNameSelcetColor\":\"#ffffff,#ffffff\",\"menuNameTextSize\":12,\"menuNameMarginTop\":5,\"itemBgColor\":\"#212423,#212423\",\"itemBgSelectColor\":\"#D53533,#D53533\"," +
-//                "\"isShowIcon\":true,\"menuIcon\":\"assets://images/icon_tab_me_nor.png\",\"selectMenuIcon\":\"assets://images/icon_tab_me_pre.png\",\"menuIconWidthAndHeight\":20,\"orientation\":1," +
-//                "\"onClickInfo\":{\"className\":\"com.cjml.app.ui.activitys.main.MeActivity\"}}]}";
-//    }
+
+    /**
+     * 得到默认配置数据
+     *
+     * @return
+     * @author :Atar
+     * @createTime:2017-5-24下午1:28:35
+     * @version:1.0.0
+     * @modifyTime:
+     * @modifyAuthor:
+     * @description:
+     */
+    public static String getDefaultSetting() {
+        return "{\n" +
+                "    \"configVersionName\":\"1.0.00\",\n" +
+                "    \"guideImageConfigJson\":{\n" +
+                "        \"guideImageVersion\":\"1.0.08\",\n" +
+                "        \"guideImageMinVersionName\":\"1.0.00\",\n" +
+                "        \"list\":[\n" +
+                "            \"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605787039347&di=dbc20edebafe0283000c2213f1149c44&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F9345d688d43f87941a6570a2d71b0ef41ad53aa7.jpg\",\n" +
+                "            \"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3414787736,2428132775&fm=26&gp=0.jpg\"\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    \"skinconfigJson\":{\n" +
+                "        \"isLoadApkSkin\":true,\n" +
+                "        \"skinVersionName\":\"1.0.70\",\n" +
+                "        \"skinReplaceMinVersion\":\"1.0.00\",\n" +
+                "        \"skinTypes\":[\n" +
+                "            {\n" +
+                "                \"skinType\":0,\n" +
+                "                \"skinName\":\"日间模式\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"skinType\":1,\n" +
+                "                \"skinName\":\"夜间模式\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    \"pluginConfigJson\":{\n" +
+                "        \"pluginBaseOnHosetMinVersionName\":\"1.0.00\",\n" +
+                "        \"pluginList\":[\n" +
+                "            {\n" +
+                "                \"pluginPath\":\"1.0.00\",\n" +
+                "                \"pluginVersion\":\"1.0.00\",\n" +
+                "                \"pluginShowName\":\"\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"pluginPath\":\"1.0.00\",\n" +
+                "                \"pluginVersion\":\"1.0.00\",\n" +
+                "                \"pluginShowName\":\"\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"pluginPath\":\"1.0.00\",\n" +
+                "                \"pluginVersion\":\"1.0.00\",\n" +
+                "                \"pluginShowName\":\"\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }\n" +
+                "}";
+    }
 }
