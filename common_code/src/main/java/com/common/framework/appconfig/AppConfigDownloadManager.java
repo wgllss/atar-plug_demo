@@ -4,7 +4,11 @@
 package com.common.framework.appconfig;
 
 import android.app.Activity;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.common.framework.Threadpool.ThreadPoolTool;
 import com.common.framework.application.CrashHandler;
@@ -12,6 +16,9 @@ import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.download.DownLoadFileManager;
 import com.common.framework.http.HttpRequest;
 import com.common.framework.interfaces.HandlerListener;
+import com.common.framework.utils.AppBuildConfig;
+import com.common.framework.utils.FileUtils;
+import com.common.framework.utils.MDPassword;
 import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
 
@@ -21,6 +28,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * ****************************************************************************************************************************************************************************
@@ -38,6 +47,7 @@ public class AppConfigDownloadManager {
 
     private static String TAG = AppConfigDownloadManager.class.getSimpleName();
 
+    private ExecutorService singleThreadExecutor;
     private static AppConfigDownloadManager instance;
     public static String defaultVersion = "1.0.00";
 
@@ -74,10 +84,9 @@ public class AppConfigDownloadManager {
             if (newVersion == null || replaceMinVersion == null || newVersion.length() == 0 || replaceMinVersion.length() == 0) {
                 return;
             }
-            File downloadFile = new File(strDownloadDir + strDownloadFileName);
+            final File downloadFile = new File(strDownloadDir + strDownloadFileName);
+            String localVersion = AppConfigModel.getInstance().getString(fileUrl, defaultVersion);
             if (downloadFile.exists()) {// 存在下载文件
-                String localVersion = AppConfigModel.getInstance().getString(fileUrl, defaultVersion);
-                ZzLog.e("fileUrl 本地版本:" + localVersion);
                 if (newVersion.compareToIgnoreCase(localVersion) > 0
                         && localVersion.compareToIgnoreCase(replaceMinVersion) >= 0) {
                     // 配置新版本比本地版本大 同时 允许替换的版本比本地版本大
@@ -87,7 +96,6 @@ public class AppConfigDownloadManager {
                     return;
                 }
             }
-            ZzLog.e("fileUrl:" + fileUrl + ":不存在");
             DownLoadFileManager.getInstance().downLoad(activity, new HandlerListener() {
                 @Override
                 public void onHandlerData(Message msg) {
@@ -96,6 +104,10 @@ public class AppConfigDownloadManager {
                             ShowLog.i(TAG, fileUrl + ":下载失败");
                             break;
                         case DownLoadFileBean.DOWLOAD_FLAG_SUCCESS:
+                            if (singleThreadExecutor == null) {
+                                singleThreadExecutor = Executors.newSingleThreadExecutor();
+                            }
+                            singleThreadExecutor.execute(new RefreshSDRunnable(strDownloadDir, newVersion, localVersion, strDownloadFileName));
                             AppConfigModel.getInstance().putString(fileUrl, newVersion, true);
                             ShowLog.i(TAG, fileUrl + ":下载成功");
                             break;
@@ -161,6 +173,46 @@ public class AppConfigDownloadManager {
                 }
             }
         });
+    }
+
+
+    class RefreshSDRunnable implements Runnable {
+        private String path;
+        private String newVersion;
+        private String localVersion;
+        private String strDownloadFileName;
+
+        public RefreshSDRunnable(String path, String newVersion, String localVersion, String strDownloadFileName) {
+            this.path = path;
+            this.newVersion = newVersion;
+            this.localVersion = localVersion;
+            this.strDownloadFileName = strDownloadFileName;
+        }
+
+        @Override
+        public void run() {
+            File fileP = new File(path);
+            File file = new File(fileP.getParent());
+            if (file.exists()) {
+                File[] files = file.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    if (files[i] != null) {
+                        if ((!TextUtils.isEmpty(newVersion) && files[i].getAbsolutePath().contains(newVersion)) || (!TextUtils.isEmpty(localVersion) && files[i].getAbsolutePath().contains(localVersion))) {
+
+                        } else {
+                            //删除以前版本文件夹及相关文件
+                            FileUtils.deleteFile(files[i].getAbsolutePath() + "/");
+                        }
+                    }
+                }
+            }
+            MediaScannerConnection.scanFile(AppBuildConfig.getApplication(), new String[]{path}, new String[]{"application/octet-stream"}, new MediaScannerConnection.OnScanCompletedListener() {
+                @Override
+                public void onScanCompleted(final String path, final Uri uri) {
+                    //your file has been scanned!
+                }
+            });
+        }
     }
 
     /**

@@ -65,10 +65,6 @@ public class SkinResourcesManager {
      * 皮肤工程包名
      */
     private String skin_project_packname = "";
-//    /**
-//     * assets根目录下资源文件 默认皮肤资源
-//     */
-//    private String DEFAULT_ASSETS_SKIN_NAME = "skin.so";
     /**
      * SD卡目录 下载 资源文件 皮肤资源
      */
@@ -129,7 +125,6 @@ public class SkinResourcesManager {
                         ZzLog.e("current_version:" + current_version);
                         if (TextUtils.isEmpty(current_version)) {
                             //当前版本 本地没有
-                            isLoadApkSkin = false;
                             loadDefaultSkin();
                             return;
                         }
@@ -144,7 +139,6 @@ public class SkinResourcesManager {
                         }
                         loadDefaultSkin();
                     } catch (Exception e) {
-                        isLoadApkSkin = false;
                         loadDefaultSkin();
                         e.printStackTrace();
                     }
@@ -156,6 +150,7 @@ public class SkinResourcesManager {
     //加载默认皮肤
     private void loadDefaultSkin() {
         try {
+            isLoadApkSkin = false;
             mResources = mContext.getResources();
         } catch (Exception e) {
             e.printStackTrace();
@@ -192,7 +187,6 @@ public class SkinResourcesManager {
             }
             ShowLog.i(TAG, "皮肤加载成功");
         } catch (Exception e) {
-            isLoadApkSkin = false;
             loadDefaultSkin();
             e.printStackTrace();
         }
@@ -219,7 +213,6 @@ public class SkinResourcesManager {
                         ZzLog.e("current_version:" + current_version);
                         if (TextUtils.isEmpty(current_version)) {
                             //当前版本 本地没有
-                            isLoadApkSkin = false;
                             loadDefaultSkin();
                             return;
                         }
@@ -234,7 +227,6 @@ public class SkinResourcesManager {
                         }
                         loadDefaultSkin();
                     } catch (Exception e) {
-                        isLoadApkSkin = false;
                         loadDefaultSkin();
                         e.printStackTrace();
                     }
@@ -260,7 +252,7 @@ public class SkinResourcesManager {
         AppConfigModel.getInstance().putBoolean(IS_LOAD_APK_SKIN_KEY, isLoadApkSkin, true);
         if (isLoadApkSkin) {
             AppConfigDownloadManager.getInstance().downLoadAppConfigFile(activity, new SkinHandlerListener(newVersion, isLoadApkSkin), newVersion, replaceMinVersion, 0, download_skin_Url, 1, true,
-                    DOWNLOAD_SD_SKIN_NAME, SD_PATH + current_version + "/");
+                    DOWNLOAD_SD_SKIN_NAME, SD_PATH + newVersion + "/");
         }
     }
 
