@@ -168,6 +168,7 @@ public class SkinResourcesManager {
     private void loadDefaultSkin() {
         try {
             isLoadApkSkin = false;
+            AppConfigModel.getInstance().putInt(SkinMode.SKIN_MODE_KEY, SkinMode.DAY_MODE, true);
             current_confing_content = default_confing_content;
             mResources = mContext.getResources();
         } catch (Exception e) {
