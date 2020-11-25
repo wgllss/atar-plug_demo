@@ -58,7 +58,8 @@
             android:theme="@style/translucent" />
         <activity
             android:name=".activity.MainSub4Activity"
-            android:theme="@style/translucent"></activity>
+            android:theme="@style/translucent" />
+        <activity android:name=".activity.SubHomeActivity"></activity>
     </application>
 
 </manifest>

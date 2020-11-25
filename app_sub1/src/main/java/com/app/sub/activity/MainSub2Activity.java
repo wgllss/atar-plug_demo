@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainSub2Activity extends CommTitleResouseActivity implements SubMenuAdapter.OnItemClickListener {
 
-    private RecyclerView recyclerview;
+    protected RecyclerView recyclerview;
     private List<MenuItemBean> list = new ArrayList<MenuItemBean>();
     private SubMenuAdapter subMenuAdapter = new SubMenuAdapter(list);
 
@@ -32,7 +32,7 @@ public class MainSub2Activity extends CommTitleResouseActivity implements SubMen
         setActivityTitle("插件子页2");
 
         recyclerview = findViewById(R.id.recyclerview);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setLayoutManager(getLayoutManager());
 
         list.add(new MenuItemBean(0, "子页2 使用 dialog"));
         list.add(new MenuItemBean(1, "子页2 使用fragment"));
@@ -42,9 +42,14 @@ public class MainSub2Activity extends CommTitleResouseActivity implements SubMen
         list.add(new MenuItemBean(5, "子页2 使用 livedada, 网络请求后用"));
         list.add(new MenuItemBean(6, "子页2 使用 webview 加载线上"));
         list.add(new MenuItemBean(7, "子页2 使用插件页完全自定义"));
+        list.add(new MenuItemBean(8, "跳转到 宿主页改变皮肤"));
         recyclerview.setAdapter(subMenuAdapter);
 
         subMenuAdapter.setListener(this);
+    }
+
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(this);
     }
 
     @Override
@@ -81,6 +86,16 @@ public class MainSub2Activity extends CommTitleResouseActivity implements SubMen
                 break;
             case 7:
                 IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, MainSub4Activity.class));
+                break;
+            case 8:
+                try {
+                    Class<?> cls = Class.forName("com.atar.host.app.activity.SettingActivity");
+                    Intent intent = new Intent(thisContext, cls);
+                    intent.putExtra(PluginManager.HOST_CLASS_NAME, true);
+                    IntentUtil.startOtherActivity(thisContext, intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

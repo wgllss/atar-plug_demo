@@ -8,6 +8,8 @@ import com.common.business.code.activity.BasePresenter;
 import com.common.business.code.activity.CommonTitleActivity;
 import com.common.business.code.lifecyle.BaseViewModel;
 import com.common.framework.skin.SkinUtils;
+import com.common.framework.stack.ActivityManager;
+import com.common.framework.widget.CommonToast;
 
 import androidx.annotation.Nullable;
 
@@ -44,9 +46,20 @@ public class CommTitleResouseActivity<VM extends BaseViewModel, P extends BasePr
         return null;
     }
 
+    private long exitTime = 0;
+
+    public void subexitApp() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            CommonToast.show("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            ActivityManager.getActivityManager().exitApplication();
+        }
+    }
+
     @Override
     public void exitApp() {
-        ((BaseActivity) thisContext).exitApp();
+        subexitApp();
     }
 
     @Override
