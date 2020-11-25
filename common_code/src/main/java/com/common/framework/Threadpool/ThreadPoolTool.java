@@ -47,7 +47,7 @@ public class ThreadPoolTool {
     }
 
     // 线程池
-    private final ExecutorService exec = Executors.newFixedThreadPool(2);
+    private final ExecutorService exec = Executors.newCachedThreadPool();
     private Gson gson = new Gson();
 
     /**

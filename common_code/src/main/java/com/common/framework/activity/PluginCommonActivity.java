@@ -244,18 +244,17 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
         }
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isPlugin) {
-            return false;
-        } else {
+        if (!isPlugin) {
             return super.onTouchEvent(event);
         }
+        return false;
     }
 
+    @Override
     public void onBackPressed() {
-        if (isPlugin) {
-            thisContext.onBackPressed();
-        } else {
+        if (!isPlugin) {
             super.onBackPressed();
         }
     }
@@ -349,55 +348,44 @@ public class PluginCommonActivity extends CommonActivity implements PluginInterf
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (isPlugin) {
-            return thisContext.onKeyDown(keyCode, event);
-        } else {
+        if (!isPlugin) {
             return super.onKeyDown(keyCode, event);
         }
+        return false;
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (isPlugin) {
-            return thisContext.onKeyUp(keyCode, event);
-        } else {
+        if (!isPlugin) {
             return super.onKeyUp(keyCode, event);
         }
-
+        return false;
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        if (isPlugin) {
-            thisContext.onWindowFocusChanged(hasFocus);
-        } else {
+        if (!isPlugin) {
             super.onWindowFocusChanged(hasFocus);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (isPlugin) {
-            thisContext.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        } else {
+        if (!isPlugin) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
     @Override
     public void onAttachedToWindow() {
-        if (isPlugin) {
-            thisContext.onAttachedToWindow();
-        } else {
+        if (!isPlugin) {
             super.onAttachedToWindow();
         }
     }
 
     @Override
     public void onDetachedFromWindow() {
-        if (isPlugin) {
-            thisContext.onDetachedFromWindow();
-        } else {
+        if (!isPlugin) {
             super.onDetachedFromWindow();
         }
     }

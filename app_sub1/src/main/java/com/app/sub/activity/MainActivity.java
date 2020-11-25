@@ -55,4 +55,9 @@ public class MainActivity extends CommTitleResouseActivity<TestViewModel, TestPr
             ZzLog.e("txt_onclick --");
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        exitApp();
+    }
 }

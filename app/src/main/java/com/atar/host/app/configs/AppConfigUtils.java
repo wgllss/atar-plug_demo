@@ -4,14 +4,19 @@
 package com.atar.host.app.configs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
 
 import com.atar.host.app.BuildConfig;
+import com.atar.host.app.activity.proxy.ProxyActivity;
 import com.atar.host.app.services.DownLoadSevice;
+import com.common.business.code.activity.BaseActivity;
+import com.common.business.code.utils.IntentUtil;
 import com.common.framework.Threadpool.ThreadPoolTool;
 import com.common.framework.appconfig.AppConfigDownloadManager;
 import com.common.framework.appconfig.AppConfigModel;
+import com.common.framework.plugin.PluginManager;
 import com.common.framework.skin.SkinResourcesManager;
 import com.common.framework.utils.ShowLog;
 import com.common.framework.utils.ZzLog;
@@ -145,6 +150,16 @@ public class AppConfigUtils {
                         //下载皮肤 供下次使用
                         SkinResourcesManager.getInstance(context).downLoadSkin(null, mAppConfigJson.getSkinconfigJson().isLoadApkSkin(), mAppConfigJson.getSkinconfigJson().getSkinVersionName(), mAppConfigJson.getSkinconfigJson().getSkinReplaceMinVersion());
                     }
+
+                    //处理插件
+                    if (mAppConfigJson.getPluginConfigJson() != null && mAppConfigJson.getPluginConfigJson().getPluginList() != null && mAppConfigJson.getPluginConfigJson().getPluginList().size() > 0) {
+                        String pluginBaseOnHosetMinVersionName = mAppConfigJson.getPluginConfigJson().getPluginBaseOnHosetMinVersionName();
+                        if (!TextUtils.isEmpty(pluginBaseOnHosetMinVersionName) && pluginBaseOnHosetMinVersionName.compareToIgnoreCase(BuildConfig.VERSION_NAME) > 0) {
+                            ZzLog.e("需要升级宿主程序了");
+                            return;
+                        }
+                        DownLoadSevice.startDownloadPlugin(context, gson.toJson(mAppConfigJson.getPluginConfigJson().getPluginList()));
+                    }
                 }
             }
         });
@@ -236,91 +251,64 @@ public class AppConfigUtils {
 //        }
 //    }
 //
-//    /**
-//     * 从json中获取参数传入到intent中去 适合app中所有跳转
-//     *
-//     * @param intent
-//     * @return
-//     * @author :Atar
-//     * @createTime:2017-5-24上午11:25:36
-//     * @version:1.0.0
-//     * @modifyTime:
-//     * @modifyAuthor:
-//     * @description:
-//     */
-//    public static Intent getIntentFromOptionJson(Context context, Intent intent, String
-//            optionJson, String onEventInfo) {
-//        try {
-//            if (optionJson != null && optionJson.length() > 0) {// 解析跳转传入参数
-//                JSONArray jsonArray = new JSONArray(optionJson);
-//                if (jsonArray != null && jsonArray.length() > 0) {
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        if (jsonObject != null) {
-//                            if (jsonObject.has("intentKeyValueClassName")) {
-//                                String intentKeyValueClassName = jsonObject.getString
-//                                        ("intentKeyValueClassName");
-//                                String intentKey = jsonObject.getString("intentKey");
-//                                if ("int".equals(intentKeyValueClassName)) {
-//                                    int intentKeyValue = jsonObject.getInt("intentKeyValue");
-//                                    intent.putExtra(intentKey, intentKeyValue);
-//                                } else if ("String".equals(intentKeyValueClassName)) {
-//                                    String intentKeyValue = jsonObject.getString("intentKeyValue");
-//                                    if (intentKeyValue != null) {
-//                                        if (!"TAB_OPTION_JSON_KEY".equals(intentKey) &&
-//                                                !"VIEWPAGER_OPTION_JSON_KEY".equals(intentKey) &&
-//                                                intentKeyValue.contains(".js")
-//                                                && intentKeyValue.contains("build/src")) {
-//                                            // 传入weex js地址 ，自动原生 拼接可切换环境
-//                                            try {
-//                                                String[] str = intentKeyValue.split("/");
-//                                                if (str != null && str.length > 0) {
-//                                                    String path = str[0];
-//                                                    path = UrlParamCommon.CONFIG_IP.contains("com" +
-//                                                            ".cn") ? path + "/" : "";
-//                                                    intentKeyValue = UrlParamCommon.CONFIG_HOST +
-//                                                            path + intentKeyValue;
-//                                                }
-//                                            } catch (Exception e) {
-//                                                CrashHandler.getInstance().CrashException(e, CrashHandler.CRASHT_YPE_CATCH);
-//                                                ShowLog.e(TAG, e);
-//                                            }
-//                                        } else if (!"TAB_OPTION_JSON_KEY".equals(intentKey) &&
-//                                                !"VIEWPAGER_OPTION_JSON_KEY".equals(intentKey) &&
-//                                                intentKeyValue.contains(".html")
-//                                                && intentKeyValue.contains("assets/html")) {
-//                                            // 传入html地址 ，自动原生 拼接可切换环境
-//                                            intentKeyValue = UrlParamCommon.CONFIG_HOST +
-//                                                    intentKeyValue;
-//                                        }
-//                                    }
-//                                    intent.putExtra(intentKey, intentKeyValue);
-//                                } else if ("double".equals(intentKeyValueClassName)) {
-//                                    double intentKeyValue = jsonObject.getDouble("intentKeyValue");
-//                                    intent.putExtra(intentKey, intentKeyValue);
-//                                } else if ("ArrayList<String>".equals(intentKeyValueClassName)) {
-//                                    String json = jsonObject.getString("intentKeyValue");
-//                                    if (json != null && json.length() > 0) {
-//                                        JSONArray jsonArray1 = new JSONArray(json);
-//                                        ArrayList<String> list = new ArrayList<String>();
-//                                        for (int j = 0; j < jsonArray1.length(); j++) {
-//                                            list.add(jsonArray1.getString(j));
-//                                        }
-//                                        intent.putStringArrayListExtra(intentKey, list);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            CrashHandler.getInstance().CrashException(e, CrashHandler.CRASHT_YPE_CATCH);
-//            ShowLog.e(TAG, e);
-//        }
-//        setEventInfo(context, onEventInfo);
-//        return intent;
-//    }
+
+    /**
+     * 从json中获取参数传入到intent中去 适合app中所有跳转
+     *
+     * @return
+     * @author :Atar
+     * @createTime:2017-5-24上午11:25:36
+     * @version:1.0.0
+     * @modifyTime:
+     * @modifyAuthor:
+     * @description:
+     */
+    public static void startActivity(Context context, HomeConfigJson homeConfigJson) {
+        try {
+            if (homeConfigJson == null) {
+                return;
+            }
+            switch (homeConfigJson.getType()) {
+                case 0://宿主 跳转宿主
+                    if (!TextUtils.isEmpty(homeConfigJson.getClassName())) {
+                        ZzLog.e("homeConfigJson.getClassName()-->" + homeConfigJson.getClassName());
+                        Class<?> cls = Class.forName(homeConfigJson.getClassName());
+                        Intent intent = new Intent(context, cls);
+                        String optionJson = homeConfigJson.getOptionJson();
+                        intent = IntentUtil.getIntentFromOptionJson(intent, optionJson);
+                        IntentUtil.startOtherActivity(context, intent);
+                    }
+                    break;
+                case 1://宿主跳转到插件
+                    if (!TextUtils.isEmpty(homeConfigJson.getClassName())) {
+                        ZzLog.e("homeConfigJson.getClassName()-->" + homeConfigJson.getClassName());
+                        String optionJson = homeConfigJson.getOptionJson();
+                        if (context instanceof BaseActivity) {
+                            String apk_sdk_path = Config.strDownloadDir + homeConfigJson.getPluginPath();
+                            ZzLog.e("apk_sdk_path:" + apk_sdk_path);
+                            ProxyActivity.startProxyActivity((BaseActivity) context, optionJson, homeConfigJson.getClassName(), apk_sdk_path);
+                        }
+                    }
+                    break;
+                case 2://插件跳转到宿主 代码写在插件里面
+                    if (!TextUtils.isEmpty(homeConfigJson.getClassName())) {
+                        Class<?> cls = Class.forName(homeConfigJson.getClassName());
+                        Intent intent = new Intent(context, cls);
+                        intent.putExtra(PluginManager.HOST_CLASS_NAME, true);
+                        String optionJson = homeConfigJson.getOptionJson();
+                        intent = IntentUtil.getIntentFromOptionJson(intent, optionJson);
+                        IntentUtil.startOtherActivity(context, intent);
+                    }
+                    break;
+                case 3://插件到插件 ，代码写在插件里面
+                    break;
+            }
+
+        } catch (Exception e) {
+            ShowLog.e(TAG, e);
+        }
+    }
+
 //
 //    /**
 //     * 设置统计事件
@@ -407,21 +395,16 @@ public class AppConfigUtils {
                 "        \"pluginBaseOnHosetMinVersionName\":\"1.0.00\",\n" +
                 "        \"pluginList\":[\n" +
                 "            {\n" +
-                "                \"pluginPath\":\"1.0.00\",\n" +
+                "                \"pluginUrl\":\"assets/apk/down_plugin/release/app_sub1-release.apk\",\n" +
                 "                \"pluginVersion\":\"1.0.00\",\n" +
-                "                \"pluginShowName\":\"\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"pluginPath\":\"1.0.00\",\n" +
-                "                \"pluginVersion\":\"1.0.00\",\n" +
-                "                \"pluginShowName\":\"\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"pluginPath\":\"1.0.00\",\n" +
-                "                \"pluginVersion\":\"1.0.00\",\n" +
-                "                \"pluginShowName\":\"\"\n" +
+                "                \"pluginReplaceMinVersion\":\"1.0.00\",\n" +
+                "                \"pluginShowName\":\"app_sub1模块\"\n" +
                 "            }\n" +
                 "        ]\n" +
+                "    },\n" +
+                "    \"homeConfigJson\":{\n" +
+                "        \"type\":0,\n" +
+                "        \"className\":\"com.atar.host.app.activity.Main2Activity\"\n" +
                 "    }\n" +
                 "}";
     }

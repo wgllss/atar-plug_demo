@@ -74,8 +74,6 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-
         list.add(new MenuItemBean(0, "到插件内"));
         list.add(new MenuItemBean(1, "BridgeWebView 加载 在线html 离线js 样式 图片"));
         list.add(new MenuItemBean(2, "WebView 加载 在线 html"));
@@ -102,7 +100,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
                 setIP();
                 String className = "com.app.sub.activity.MainActivity";
 //                IntentUtil.startOtherActivity(thisContext, new Intent(thisContext, ProxyActivity.class));
-                ProxyActivity.startProxyActivity(Main2Activity.this, className, apk_sdk_path);
+                ProxyActivity.startProxyActivity(Main2Activity.this, "", className, apk_sdk_path);
                 break;
             case 1:
                 setIP();
@@ -164,7 +162,7 @@ public class Main2Activity extends CommTitleResouseActivity<TestViewModel, TestP
     }
 
     public void setIP() {
-        ip = AppConfigModel.getInstance().getString(Config.SAVE_HOST_IP_KEY, "");
+        ip = AppConfigModel.getInstance().getString(Config.SAVE_HOST_IP_KEY, ip);
         url = ip + ":8080/assets/apk/down_plugin/release/app_sub1-release.apk";
         if (!url.contains("http://")) {
             url = "http://" + url;

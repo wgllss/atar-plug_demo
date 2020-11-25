@@ -3,6 +3,7 @@ package com.app.sub.activity;
 import android.os.Bundle;
 
 import com.app.sub.R;
+import com.common.business.code.activity.BaseActivity;
 import com.common.business.code.activity.BasePresenter;
 import com.common.business.code.activity.CommonTitleActivity;
 import com.common.business.code.lifecyle.BaseViewModel;
@@ -41,6 +42,11 @@ public class CommTitleResouseActivity<VM extends BaseViewModel, P extends BasePr
     @Override
     protected Class getModelClass() {
         return null;
+    }
+
+    @Override
+    public void exitApp() {
+        ((BaseActivity) thisContext).exitApp();
     }
 
     @Override

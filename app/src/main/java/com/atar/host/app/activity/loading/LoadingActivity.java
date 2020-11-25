@@ -1,7 +1,6 @@
 package com.atar.host.app.activity.loading;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,22 +10,19 @@ import com.atar.host.app.BuildConfig;
 import com.atar.host.app.R;
 import com.atar.host.app.activity.Main2Activity;
 import com.atar.host.app.adapter.PagerAdAdapter;
-import com.atar.host.app.aplication.AtarApplication;
+import com.atar.host.app.configs.AppConfigJson;
 import com.atar.host.app.configs.AppConfigUtils;
 import com.atar.host.app.configs.Config;
-import com.atar.host.app.services.DownLoadSevice;
 import com.common.business.code.activity.BaseActivity;
 import com.common.business.code.utils.IntentUtil;
 import com.common.framework.appconfig.AppConfigModel;
 import com.common.framework.interfaces.TimerListener;
 import com.common.framework.skin.SkinResourcesManager;
-import com.common.framework.utils.ServiceUtil;
 import com.common.framework.utils.TimerUtils;
 import com.common.framework.utils.ZzLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.viewpager.widget.ViewPager;
@@ -132,13 +128,25 @@ public class LoadingActivity extends BaseActivity implements ViewPager.OnPageCha
         TimerUtils.CountDown(compositeDisposable, time, new TimerListener() {
             @Override
             public void onNext(String num) {
-                txt_time.setText(num + "s后调转");
+                txt_time.setText(num + "s后跳转");
             }
 
             @Override
             public void onComplete() {
-                IntentUtil.startOtherActivity(LoadingActivity.this, new Intent(LoadingActivity.this, Main2Activity.class));
-                IntentUtil.finishWhthoutTween(LoadingActivity.this);
+                try {
+                    String current_confing_content = SkinResourcesManager.getInstance(LoadingActivity.this).getCurrent_confing_content();
+                    Gson gson = new Gson();
+                    AppConfigJson mAppConfigJson = gson.fromJson(current_confing_content, AppConfigJson.class);
+                    if (mAppConfigJson == null) {
+                        return;
+                    }
+                    AppConfigUtils.startActivity(LoadingActivity.this, mAppConfigJson.getHomeConfigJson());
+//                    IntentUtil.finishWhthoutTween(LoadingActivity.this);
+                } catch (Exception e) {
+                    ZzLog.e(e);
+                    IntentUtil.startOtherActivity(LoadingActivity.this, new Intent(LoadingActivity.this, Main2Activity.class));
+//                    IntentUtil.finishWhthoutTween(LoadingActivity.this);
+                }
             }
         });
     }

@@ -10,6 +10,7 @@ public class AppConfigJson {
     private SkinConfigJson skinconfigJson; //皮肤信息
     private PluginConfigJson pluginConfigJson; //插件信息
     private GuideImageConfigJson guideImageConfigJson;//开机引导图信息
+    private HomeConfigJson homeConfigJson;
 
     public String getConfigVersionName() {
         return configVersionName;
@@ -27,4 +28,7 @@ public class AppConfigJson {
         return guideImageConfigJson;
     }
 
+    public HomeConfigJson getHomeConfigJson() {
+        return homeConfigJson;
+    }
 }

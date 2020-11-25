@@ -11,7 +11,13 @@ import com.common.framework.activity.CommonActivity;
 import com.common.framework.application.CrashHandler;
 import com.common.framework.stack.ActivityManager;
 import com.common.framework.utils.ShowLog;
+import com.common.framework.utils.ZzLog;
 import com.common_business_code.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -262,5 +268,51 @@ public class IntentUtil {
 				ShowLog.e(TAG, CrashHandler.crashToString(e));
 			}
 		}
+	}
+
+	//从json中获取参数传入到intent中去 适合app中所有跳转
+	public static Intent getIntentFromOptionJson(Intent intent, String optionJson) {
+		try {
+			if (optionJson != null && optionJson.length() > 0) {// 解析跳转传入参数
+				JSONArray jsonArray = new JSONArray(optionJson);
+				if (jsonArray != null && jsonArray.length() > 0) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = jsonArray.getJSONObject(i);
+						if (jsonObject != null) {
+							if (jsonObject.has("intentKeyValueClassName")) {
+								String intentKeyValueClassName = jsonObject.getString("intentKeyValueClassName");
+								String intentKey = jsonObject.getString("intentKey");
+								if ("int".equals(intentKeyValueClassName)) {
+									int intentKeyValue = jsonObject.getInt("intentKeyValue");
+									intent.putExtra(intentKey, intentKeyValue);
+								} else if ("String".equals(intentKeyValueClassName)) {
+									String intentKeyValue = jsonObject.getString("intentKeyValue");
+									intent.putExtra(intentKey, intentKeyValue);
+								} else if ("long".equals(intentKeyValueClassName)) {
+									long intentKeyValue = jsonObject.getLong("intentKeyValue");
+									intent.putExtra(intentKey, intentKeyValue);
+								} else if ("double".equals(intentKeyValueClassName)) {
+									double intentKeyValue = jsonObject.getDouble("intentKeyValue");
+									intent.putExtra(intentKey, intentKeyValue);
+								} else if ("ArrayList<String>".equals(intentKeyValueClassName)) {
+									String json = jsonObject.getString("intentKeyValue");
+									if (json != null && json.length() > 0) {
+										JSONArray jsonArray1 = new JSONArray(json);
+										ArrayList<String> list = new ArrayList<String>();
+										for (int j = 0; j < jsonArray1.length(); j++) {
+											list.add(jsonArray1.getString(j));
+										}
+										intent.putStringArrayListExtra(intentKey, list);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			ZzLog.e(e);
+		}
+		return intent;
 	}
 }

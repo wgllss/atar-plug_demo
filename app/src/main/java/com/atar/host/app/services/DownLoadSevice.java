@@ -9,15 +9,21 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.atar.host.app.configs.Config;
+import com.atar.host.app.plugin.PluginBean;
+import com.common.framework.Threadpool.ThreadPoolTool;
+import com.common.framework.appconfig.AppConfigDownloadManager;
 import com.common.framework.download.DownLoadFileBean;
 import com.common.framework.download.DownLoadFileManager;
 import com.common.framework.interfaces.HandlerListener;
+import com.common.framework.skin.SkinResourcesManager;
 import com.common.framework.utils.ZzLog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DownLoadSevice extends Service implements HandlerListener {
 
@@ -32,30 +38,53 @@ public class DownLoadSevice extends Service implements HandlerListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
             if (intent != null) {
-                int type = intent.getIntExtra(STR_DOWN_LOAD_TYPE, 0);
-                switch (type) {
-                    case DOWN_LOAD_TYPE:
-                        int whichUrl = intent.getIntExtra(DOWN_LOAD_WHICH_URL_KEY, 0);
-                        String downloadUrl = intent.getStringExtra(DOWN_LOAD_URL_KEY);
-                        String strDownloadFileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1, downloadUrl.length());
-                        DownLoadFileManager.getInstance().downLoad(null, this, whichUrl, downloadUrl, 2, true, strDownloadFileName, Config.strDownloadDir);
-                        break;
-                    case DOWN_LOAD_GUIDE_IMAGE_TYPE://下载引导图
-                        String imgContent = intent.getStringExtra(DOWN_LOAD_GUIDE_IMAGE_CONTENT_KEY);
-                        if (!TextUtils.isEmpty(imgContent)) {
-                            Gson gson = new Gson();
-                            List<String> list = gson.fromJson(imgContent, new TypeToken<List<String>>() {
-                            }.getType());
-                            if (list != null && list.size() > 0) {
-                                for (int i = 0; i < list.size(); i++) {
-                                    SimpleDraweeView imgaeView = new SimpleDraweeView(this);
-                                    imgaeView.setScaleType(ImageView.ScaleType.FIT_XY);
-                                    imgaeView.setImageURI(list.get(i));
+                ThreadPoolTool.getInstance().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int type = intent.getIntExtra(STR_DOWN_LOAD_TYPE, 0);
+                        switch (type) {
+                            case DOWN_LOAD_TYPE:
+                                int whichUrl = intent.getIntExtra(DOWN_LOAD_WHICH_URL_KEY, 0);
+                                String downloadUrl = intent.getStringExtra(DOWN_LOAD_URL_KEY);
+                                String strDownloadFileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1, downloadUrl.length());
+                                DownLoadFileManager.getInstance().downLoad(null, DownLoadSevice.this, whichUrl, downloadUrl, 2, true, strDownloadFileName, Config.strDownloadDir);
+                                break;
+                            case DOWN_LOAD_GUIDE_IMAGE_TYPE://下载引导图
+                                String imgContent = intent.getStringExtra(DOWN_LOAD_GUIDE_IMAGE_CONTENT_KEY);
+                                if (!TextUtils.isEmpty(imgContent)) {
+                                    Gson gson = new Gson();
+                                    List<String> list = gson.fromJson(imgContent, new TypeToken<List<String>>() {
+                                    }.getType());
+                                    if (list != null && list.size() > 0) {
+                                        for (int i = 0; i < list.size(); i++) {
+                                            SimpleDraweeView imgaeView = new SimpleDraweeView(DownLoadSevice.this);
+                                            imgaeView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                            imgaeView.setImageURI(list.get(i));
+                                        }
+                                    }
                                 }
-                            }
+                                break;
+                            case DOWN_LOAD_PLUGIN_TYPE://下载插件
+                                String pluginContent = intent.getStringExtra(DOWN_LOAD_PLUGIN_CONTENT_KEY);
+                                if (!TextUtils.isEmpty(pluginContent)) {
+                                    Gson gson = new Gson();
+                                    List<PluginBean> pluginList = gson.fromJson(pluginContent, new TypeToken<List<PluginBean>>() {
+                                    }.getType());
+                                    if (pluginList != null && pluginList.size() > 0) {
+                                        for (PluginBean info : pluginList) {
+                                            String url = info.getPluginUrl();
+                                            if (!TextUtils.isEmpty(url)) {
+                                                String fileName = url.substring(url.lastIndexOf("/") + 1, url.length());
+                                                AppConfigDownloadManager.getInstance().downLoadAppConfigFile(null, DownLoadSevice.this, info.getPluginVersion(), info.getPluginReplaceMinVersion(), 0, Config.host + url, 1, true,
+                                                        fileName, Config.strDownloadDir + info.getPluginVersion() + "/");
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
                         }
-                        break;
-                }
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,6 +146,8 @@ public class DownLoadSevice extends Service implements HandlerListener {
         }
     }
 
+
+
     private static final String STR_DOWN_LOAD_TYPE = "DOWN_LOAD_TYPE";
 
 
@@ -128,6 +159,10 @@ public class DownLoadSevice extends Service implements HandlerListener {
     private static final String DOWN_LOAD_URL_KEY = "DOWN_LOAD_URL_KEY";
     private static final String DOWN_LOAD_WHICH_URL_KEY = "DOWN_LOAD_WHICH_URL_KEY";
     private static final int DOWN_LOAD_TYPE = 1000;
+
+    //下载插件
+    private static final int DOWN_LOAD_PLUGIN_TYPE = 1002;
+    private static final String DOWN_LOAD_PLUGIN_CONTENT_KEY = "DOWN_LOAD_PLUGIN_CONTENT_KEY";
 
     //下载文件
     public static void startDownload(Context context, String downloadUrl, int whichUrl) {
@@ -148,6 +183,18 @@ public class DownLoadSevice extends Service implements HandlerListener {
             Intent intent = new Intent(context, DownLoadSevice.class);
             intent.putExtra(STR_DOWN_LOAD_TYPE, DOWN_LOAD_GUIDE_IMAGE_TYPE);
             intent.putExtra(DOWN_LOAD_GUIDE_IMAGE_CONTENT_KEY, content);
+            context.startService(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //下载引导图
+    public static void startDownloadPlugin(Context context, String content) {
+        try {
+            Intent intent = new Intent(context, DownLoadSevice.class);
+            intent.putExtra(STR_DOWN_LOAD_TYPE, DOWN_LOAD_PLUGIN_TYPE);
+            intent.putExtra(DOWN_LOAD_PLUGIN_CONTENT_KEY, content);
             context.startService(intent);
         } catch (Exception e) {
             e.printStackTrace();

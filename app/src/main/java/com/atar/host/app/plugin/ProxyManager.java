@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import com.atar.host.app.activity.proxy.ProxyActivity;
 import com.common.framework.activity.CommonActivity;
@@ -209,6 +210,21 @@ public class ProxyManager implements PluginInterface<CommonActivity> {
     public void onDetachedFromWindow() {
         if (pluginInterface != null) {
             pluginInterface.onDetachedFromWindow();
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (pluginInterface != null) {
+            pluginInterface.onTouchEvent(event);
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (pluginInterface != null) {
+            pluginInterface.onBackPressed();
         }
     }
 }

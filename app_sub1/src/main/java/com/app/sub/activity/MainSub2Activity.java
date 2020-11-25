@@ -84,4 +84,9 @@ public class MainSub2Activity extends CommTitleResouseActivity implements SubMen
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        exitApp();
+    }
 }

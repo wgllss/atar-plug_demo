@@ -92,7 +92,7 @@ public abstract class BaseActivity extends PluginCommonActivity {
 
     private long exitTime = 0;
 
-    protected void exitApp() {
+    public void exitApp() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             CommonToast.show("再按一次退出程序");
             exitTime = System.currentTimeMillis();

@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -64,4 +65,8 @@ public interface PluginInterface<A extends FragmentActivity> {
     void onAttachedToWindow();
 
     void onDetachedFromWindow();
+
+    boolean onTouchEvent(MotionEvent event);
+
+    void onBackPressed();
 }

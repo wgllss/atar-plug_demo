@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import com.atar.host.app.plugin.ProxyManager;
 import com.common.business.code.activity.BaseActivity;
@@ -14,6 +15,8 @@ import com.common.framework.plugin.PluginListener;
 import com.common.framework.plugin.PluginManager;
 import com.common.framework.utils.ZzLog;
 import com.common.framework.widget.CommonToast;
+
+import androidx.annotation.NonNull;
 
 public class ProxyActivity extends CommonActivity {
 
@@ -142,7 +145,62 @@ public class ProxyActivity extends CommonActivity {
         }
     }
 
-    public static void startProxyActivity(final BaseActivity context, final String className, String apk_sdk_path) {
+    @Override
+    public void onBackPressed() {
+        if (mProxyManager != null) {
+            mProxyManager.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (mProxyManager != null) {
+            mProxyManager.onKeyUp(keyCode, event);
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mProxyManager != null) {
+            mProxyManager.onKeyDown(keyCode, event);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (mProxyManager != null) {
+            mProxyManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (mProxyManager != null) {
+            mProxyManager.onWindowFocusChanged(hasFocus);
+        }
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mProxyManager != null) {
+            mProxyManager.onDetachedFromWindow();
+        }
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mProxyManager != null) {
+            mProxyManager.onAttachedToWindow();
+        }
+    }
+
+    public static void startProxyActivity(final BaseActivity context, String optionJson, final String className, String apk_sdk_path) {
         if (isLoadApk) {
             context.showloading();
             PluginManager.getInstance().setContext(context);
