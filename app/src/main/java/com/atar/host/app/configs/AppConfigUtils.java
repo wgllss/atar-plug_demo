@@ -369,7 +369,7 @@ public class AppConfigUtils {
         return "{\n" +
                 "    \"configVersionName\":\"1.0.00\",\n" +
                 "    \"guideImageConfigJson\":{\n" +
-                "        \"guideImageVersion\":\"1.0.08\",\n" +
+                "        \"guideImageVersion\":\"1.0.00\",\n" +
                 "        \"guideImageMinVersionName\":\"1.0.00\",\n" +
                 "        \"list\":[\n" +
                 "            \"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605787039347&di=dbc20edebafe0283000c2213f1149c44&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F9345d688d43f87941a6570a2d71b0ef41ad53aa7.jpg\",\n" +
@@ -378,7 +378,7 @@ public class AppConfigUtils {
                 "    },\n" +
                 "    \"skinconfigJson\":{\n" +
                 "        \"isLoadApkSkin\":true,\n" +
-                "        \"skinVersionName\":\"1.0.70\",\n" +
+                "        \"skinVersionName\":\"1.0.00\",\n" +
                 "        \"skinReplaceMinVersion\":\"1.0.00\",\n" +
                 "        \"skinTypes\":[\n" +
                 "            {\n" +
