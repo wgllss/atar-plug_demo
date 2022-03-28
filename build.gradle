@@ -4,9 +4,9 @@ buildscript {
 
     repositories {
         //阿里云的镜像库
-        maven {
-            url "http://maven.aliyun.com/nexus/content/groups/public/"
-        }
+//        maven {
+//            url "http://maven.aliyun.com/nexus/content/groups/public/"
+//        }
         google()
         mavenCentral()  //注意下这个顺序，jcenter()放到最下面
         jcenter()
@@ -23,9 +23,9 @@ buildscript {
 allprojects {
     repositories {
         //阿里云的镜像库
-        maven {
-            url "http://maven.aliyun.com/nexus/content/groups/public/"
-        }
+//        maven {
+//            url "http://maven.aliyun.com/nexus/content/groups/public/"
+//        }
         google()
         mavenCentral()  //注意下这个顺序，jcenter()放到最下面
         jcenter()
